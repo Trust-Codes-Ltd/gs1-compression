@@ -5,10 +5,23 @@ from math import ceil, log
 
 
 def number_of_length_bits(length: int):
+    """
+
+    :param length: Maximum permitted length.
+    :return: The length indicator.
+    """
     return ceil(log(length)/log(2) + 0.01)
 
 
 def number_of_value_bits(value_bits: int):
+    """
+    The number of bits N required for an all-numeric fixed-length string.
+    The binary value is left-padded (highest significant bits set to 0)
+    in order to reach the total number of bits needed.
+
+    :param value_bits: The fixed length number. For example, it's 14 for GTIN.
+    :return: The length of bits to encode the string.
+    """
     return ceil(value_bits * log(10)/log(2) + 0.01)
 
 

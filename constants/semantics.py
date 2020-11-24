@@ -1,13 +1,30 @@
+"""Semantics constants."""
+
+"""
+Table ‘stringSemantics’ provides mappings between GS1 Application Identifiers 
+that expect a string value and corresponding existing (and future) properties 
+in the GS1 Web vocabulary that also expect an xsd:string value.
+"""
 STRING_SEMANTICS = {"01": ["gs1:gtin", "schema:gtin"],
                     "10": ["gs1:hasBatchLot"], "21": ["gs1:hasSerialNumber"],
                     "235": ["gs1:hasThirdPartyControlledSerialNumber"],
                     "22": ["gs1:consumerProductVariant"]}
 
+"""
+Table ‘classSemantics’ shows relationships between GS1 Application Identifiers
+of primary GS1 identification keys and corresponding semantic classes that can
+be inferred for such AIs.
+"""
 CLASS_SEMANTICS = {"01": ["gs1:Product", "schema:Product"],
                    "8006": ["gs1:Product", "schema:Product"],
                    "414": ["gs1:Place", "schema:Place"],
                    "417": ["gs1:Organization", "schema:Organization"]}
 
+"""
+Table ‘dateSemantics’ provides mappings between GS1 Application Identifiers
+that expect a date value formatted as YYMMDD and corresponding (future)
+properties in the GS1 Web vocabulary that expect a value cast as an xsd:date.
+"""
 DATE_SEMANTICS = {"11": ["gs1:productionDate"], "12": ["gs1:dueDate"],
                   "13": ["gs1:packagingDate"], "15": ["gs1:bestBeforeDate"],
                   "16": ["gs1:sellByDate"], "17": ["gs1:expirationDate"],
@@ -16,6 +33,13 @@ DATETIME_SECONDS_SEMANTICS = {"8008": ["gs1:productionDateTime"]}
 DATETIME_MINUTES_SEMANTICS = {"7003": ["gs1:expirationDateTime"]}
 DATERANGE_SEMANTICS = {"7007": ["gs1:harvestDate"]}
 
+"""
+Table ‘qvSemantics’ below lists GS1 Application Identifiers whose values
+correspond to quantitative values
+(gs1:QuantitativeValue, schema:QuantitativeValue)
+that have a numeric floating-point value and an associated unit code, expressed
+using the appropriate UN ECE Recommendation 20 unit code.
+"""
 QUANTITATIVE_SEMANTICS = {"3100": {"p": ["gs1:netWeight"], "rec20": "KGM"},
                           "3101": {"p": ["gs1:netWeight"], "rec20": "KGM"},
                           "3102": {"p": ["gs1:netWeight"], "rec20": "KGM"},
@@ -430,4 +454,4 @@ QUANTITATIVE_SEMANTICS = {"3100": {"p": ["gs1:netWeight"], "rec20": "KGM"},
                           "3373": {"p": ["gs1:massPerUnitArea"], "rec20": "28"},
                           "3374": {"p": ["gs1:massPerUnitArea"], "rec20": "28"},
                           "3375": {"p": ["gs1:massPerUnitArea"],
-                                   "rec20": "28"}			}
+                                   "rec20": "28"}}

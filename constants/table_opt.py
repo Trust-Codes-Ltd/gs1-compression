@@ -1,7 +1,8 @@
-"""tableOpt contains optimisations for pre-defined sequences of
- GS1 Application Identifiers. We'll initially use 0A-0F through 9A-9F
-  to keep AH - EH unallocated and reserve FH for support for non-GS1 keys
-   from the URI query string.
+"""tableOpt is the ptimised encoding of combinations of GS1 Application
+Identifiers. It contains optimisations for pre-defined sequences of
+GS1 Application Identifiers. We'll initially use 0A-0F through 9A-9F
+to keep AH - EH unallocated and reserve FH for support for non-GS1 keys
+from the URI query string.
 """
 TABLE_OPT = {"0A": ["01", "22"], "0B": ["01", "10"], "0C": ["01", "21"],
              "0D": ["01", "17"], "0E": ["01", "7003"], "0F": ["01", "30"],

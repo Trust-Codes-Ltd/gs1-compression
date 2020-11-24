@@ -1,6 +1,6 @@
 """tableS1 is used for the semantic interpretation and expresses
- which simple keys or compound keys are instance identifiers
-  (uniquely identifying only one thing globally)."""
+which simple keys or compound keys are instance identifiers
+(uniquely identifying only one thing globally)."""
 # TODO extend tableS1 fully.
 # Format is primary key : null or list of AIs of which one must be specified.
 TABLE_S1 = {"01": {"requires": ["21", "235"]}, "00": {"requires": None},

@@ -10,8 +10,8 @@ from decompress.build_gs1_element_strings import (
     gs1_compressed_digital_link_to_gs1_element_strings)
 
 
-def analyse_uri(gs1_digital_link_uri, extended: bool) -> dict:
-    """"""
+def analyse_uri(gs1_digital_link_uri: str, extended: bool) -> dict:
+    """Analyze the compressed URI."""
     result = {
         'fragment': '',
         'queryString': '',

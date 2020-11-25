@@ -7,8 +7,7 @@ from utils import verify_check_digit, verify_syntax, element_strings_push
 
 
 def populate_list(gs1_ai_array, key_name):
-    return [a for a in gs1_ai_array if a in gs1_ai_array.keys() and
-            a in AI_MAPS.get(key_name)]
+    return [a for a in gs1_ai_array.keys() if a in AI_MAPS.get(key_name)]
 
 
 def build_gs1_element_strings(gs1_ai_array, brackets: bool):

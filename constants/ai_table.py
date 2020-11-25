@@ -1570,3 +1570,5 @@ AI_MAPS = {
     'fixedLength': list(FIXED_LENGTH_MAP.keys()),
     'variableLength': list(VARIABLE_LENGTH_MAP.keys()),
 }
+
+AI_UNION_KEYS = sum(list(AI_MAPS.values()), [])

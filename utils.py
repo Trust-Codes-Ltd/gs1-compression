@@ -1,7 +1,8 @@
-from constants.alphabet import SAFE_BASE64_ALPHABET
-from constants.regular_expressions import REGEX_ALL_NUM
-from constants.ai_table import AI_REGEX, AI_CHECK_DIGIT_POSITION
 from math import ceil, log
+
+from constants.alphabet import SAFE_BASE64_ALPHABET
+from constants.regular_expressions import REGEX_ALL_NUM, CHAR_TO_ESCAPE
+from constants.ai_table import AI_REGEX, AI_CHECK_DIGIT_POSITION
 
 
 def number_of_length_bits(length: int):
@@ -122,3 +123,15 @@ def element_strings_push(element_strings, app_identifier, value, gs):
     new_value = pad_gtin(app_identifier, value)
     element_strings.append(''.join([app_identifier, new_value, gs]))
     return element_strings
+
+
+def percent_encode(input_string: str):
+    """
+    Percent-code all reserved characters mentioned in the GS1 Digital Link
+    standard.
+    """
+    length_ = len(input_string)
+    escaped_chars = [''.join(['%', format(ord(char[0]), 'x').upper()])
+                     if input_string.index(char) < length_ - 1 else char
+                     for char in input_string]
+    return ''.join(escaped_chars)

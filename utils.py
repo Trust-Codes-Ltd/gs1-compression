@@ -70,7 +70,7 @@ def calculate_check_digit(app_identifier, gs1_id_value):
     else:
         length_ = int(AI_CHECK_DIGIT_POSITION.get(app_identifier))
     for i in reversed(range(0, length_ - 1)):
-        d = gs1_id_value[i:i + 2]
+        d = gs1_id_value[i]
         if counter % 2 == 0:
             multiplier = 3
         else:
@@ -106,9 +106,15 @@ def verify_check_digit(app_identifier, gs1_id_value):
 
 
 def pad_gtin(app_identifier, value):
+    """
+    Pad the value of any GTIN [ AI (01) or (02) ] to 14 digits
+    in the element string representation.
+
+    :param app_identifier: Application identifier.
+    :param value: The GTIN string - can be 8, 12 or 13 digits.
+    :return: GTIN string with zeros padded to the left, and will be 14-digit.
+    """
     new_value = value
-    # always pad the value of any GTIN [ AI (01) or (02) ] to 14 digits
-    # in element string representation
     if app_identifier in ["01", "(01)", "02", "(02)"]:
         if len(value) == 8:
             new_value = ''.join(['000000', value])
@@ -130,8 +136,7 @@ def percent_encode(input_string: str):
     Percent-code all reserved characters mentioned in the GS1 Digital Link
     standard.
     """
-    length_ = len(input_string)
     escaped_chars = [''.join(['%', format(ord(char[0]), 'x').upper()])
-                     if input_string.index(char) < length_ - 1 else char
+                     if char in CHAR_TO_ESCAPE else char
                      for char in input_string]
     return ''.join(escaped_chars)

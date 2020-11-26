@@ -45,7 +45,7 @@ def build_gs1_element_strings(gs1_ai_array, brackets: bool):
             if identifiers[0] in AI_QUALIFIER.keys():
                 qualifiers_for_primary = AI_QUALIFIER[identifiers[0]]
                 for key, value in qualifiers_for_primary:
-                    if qualifiers.index(value) < len(qualifiers) - 1:
+                    if value in qualifiers:
                         element_strings = element_strings_push(
                             element_strings, "(" + value + ")",
                             gs1_ai_array[value], ""
@@ -64,7 +64,7 @@ def build_gs1_element_strings(gs1_ai_array, brackets: bool):
         fixed_length_primary_identifier = []
         fixed_length_values_other = fixed_length_values
         for i, value in enumerate(fixed_length_values_other):
-            if identifiers.index(value) < len(identifiers) - 1:
+            if value in identifiers:
                 fixed_length_primary_identifier.append(value)
                 fixed_length_values_other.pop(i)
         for i, value in enumerate(fixed_length_primary_identifier):

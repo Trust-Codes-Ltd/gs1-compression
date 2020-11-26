@@ -3,12 +3,7 @@ from urllib.parse import unquote
 
 from decompress.binary_to_gs1_ai_array import decompress_binary_to_gs1_array
 from decompress.analyse_uri import analyse_uri
-from constants.regular_expressions import (
-    REGEX_ALL_NUM,
-    REGEX_SAFE_64,
-    REGEX_HEX_LOWER,
-    REGEX_HEX_UPPER,
-)
+from constants.regular_expressions import REGEX_ALL_NUM, REGEX_SAFE_64
 from constants.path_sequence_constraints import PATH_SEQUENCE_CONSTRAINTS
 from constants.ai_table import SHORT_CODE_TO_NUMERIC
 from utils import base64_to_str, verify_check_digit, verify_syntax, pad_gtin
@@ -23,41 +18,58 @@ def extract_from_gs1_digital_link(gs1_digital_link_uri):
     """
     obj_gs1 = {}
     result = {}
+
+    # Extract path info and query string from URI and parse
+    # the result as a dictionary.
     analyse_result = analyse_uri(gs1_digital_link_uri, extended=False)
     uri_path_info = analyse_result.get('uriPathInfo')
     path_candidates = analyse_result.get('pathCandidates')
-    split_path = uri_path_info.split('/')[1]
+    split_path = uri_path_info.split('/')[1:]
     ai_sequence = [
         SHORT_CODE_TO_NUMERIC[split_path[i]]
         for i in reversed(range(len(split_path)))
         if i % 2 == 0 and REGEX_ALL_NUM.match(split_path[i])
     ]
     ai_sequence = ai_sequence[::-1]
+
+    # check that the URI path components appear in the correct sequence.
     if ai_sequence[0] in PATH_SEQUENCE_CONSTRAINTS.keys():
-        last_index = len(PATH_SEQUENCE_CONSTRAINTS[ai_sequence[0]])
+        last_index = -1
         for j in range(1, len(ai_sequence)):
-            ind_ = PATH_SEQUENCE_CONSTRAINTS[
-                ai_sequence[0]].index(ai_sequence[j])
-            if ind_ <= last_index:
+            if (ai_sequence[j] not in
+                    PATH_SEQUENCE_CONSTRAINTS[ai_sequence[0]] or
+                    PATH_SEQUENCE_CONSTRAINTS[ai_sequence[0]].index(ai_sequence[j]) <= last_index
+            ):
                 raise Exception("Invalid GS1 Digital Link - invalid sequence"
                                 " of key qualifiers found in URI path"
                                 " information.")
-            last_index = ind_
+            last_index = PATH_SEQUENCE_CONSTRAINTS[
+                ai_sequence[0]].index(ai_sequence[j])
     # log the number keys
     for key in path_candidates.keys():
         if not REGEX_ALL_NUM.match(key):
             logger.info("numkey = {}".format(key))
     query_string_candidates = analyse_result.get('queryStringCandidates')
     non_gs1_query_string_candidates = {}
+
+    # Merge path_candidates and query_string_candidates into
+    # a combined associative array - candidates.
     candidates = path_candidates.update(query_string_candidates)
     for key, value in candidates.items():
         if not REGEX_ALL_NUM.match(key):
+            # For keys that are not all-numeric,
+            # attempt to convert to all-numeric AI equivalent.
             if key in SHORT_CODE_TO_NUMERIC.keys():
                 num_key = SHORT_CODE_TO_NUMERIC[key]
                 candidates[num_key] = candidates[key]
             else:
+                # Otherwise remove from candidates map if
+                # it doesn't relate to a GS1 Application Identifier.
                 non_gs1_query_string_candidates[key] = candidates[key]
             candidates.pop(key)
+
+    # Check that each entry in the associative array has the correct syntax
+    # and correct digit (where appropriate).
     for key, value in candidates.items():
         verify_syntax(key, value)
         verify_check_digit(key, value)
@@ -73,6 +85,9 @@ def extract_from_compressed_gs1_digital_link(gs1_digital_link_uri):
     """
     obj_gs1 = {}
     result = {}
+
+    # set cursor to 0 - start reading from the left-most part of the
+    # gs1 Digital Link URI as input.
     analyse_result = analyse_uri(gs1_digital_link_uri, extended=False)
     query_string = analyse_result.get('queryString')
     uri_path_info = analyse_result.get('uriPathInfo')
@@ -81,8 +96,8 @@ def extract_from_compressed_gs1_digital_link(gs1_digital_link_uri):
         # if semicolon was used as delimiter between key=value pairs,
         # replace with ampersand as delimiter
         query_string = query_string.replace(';', '&')
-        first_fragment = query_string.index('#')
-        if first_fragment <= len(query_string) - 1:
+        if '#' in query_string:
+            first_fragment = query_string.index('#')
             query_string = query_string[:first_fragment]
         pairs = query_string.split('&')
         for pair in pairs:
@@ -104,6 +119,7 @@ def extract_from_compressed_gs1_digital_link(gs1_digital_link_uri):
         gs1_primary_key = uri_path_info[:first_index]
         base64_segment = uri_path_info[1 + last_index:]
         gs1_primary_key_value = uri_path_info[1 + first_index:last_index]
+        obj_gs1 = decompress_binary_to_gs1_array(base64_to_str(base64_segment))
         if REGEX_ALL_NUM.match(gs1_primary_key):
             obj_gs1[gs1_primary_key] = gs1_primary_key_value
         elif gs1_primary_key in SHORT_CODE_TO_NUMERIC.keys():

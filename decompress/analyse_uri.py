@@ -21,18 +21,19 @@ def analyse_uri(gs1_digital_link_uri: str, extended: bool) -> dict:
         'compressedPath': '',
         'structuredOutput': '',
     }
-    hash_index = gs1_digital_link_uri.index('#')
     before_fragment = gs1_digital_link_uri
-    if hash_index < len(gs1_digital_link_uri) - 1:
+    if '#' in gs1_digital_link_uri:
+        hash_index = gs1_digital_link_uri.index('#')
         result['fragment'] = gs1_digital_link_uri[1 + hash_index:]
         before_fragment = gs1_digital_link_uri[:hash_index]
     before_query_string = before_fragment
-    question_index = before_fragment.index('?')
-    if question_index < len(before_fragment) - 1:
+
+    if '?' in before_fragment:
+        question_index = before_fragment.index('?')
         result['queryString'] = before_fragment[1 + question_index:]
         before_query_string = before_fragment[:question_index]
     # discard any trailing forward slash
-    if before_query_string[-1] == '/':
+    if before_query_string.endswith('/'):
         before_query_string = before_query_string[:-1]
     cursor = 0
     if before_query_string.startswith("http://"):
@@ -52,8 +53,6 @@ def analyse_uri(gs1_digital_link_uri: str, extended: bool) -> dict:
     relevant_path_components = []
     uri_stem_path_components = []
     path_comp_reverse = path_components[::-1]
-    pc_length = len(path_components)
-    pc_i = pc_length
     searching = True
     numeric_primary_identifier = ""
     for i, comp in enumerate(path_comp_reverse):
@@ -62,13 +61,11 @@ def analyse_uri(gs1_digital_link_uri: str, extended: bool) -> dict:
         else:
             num_key = SHORT_CODE_TO_NUMERIC.get(comp, '')
         if num_key and searching:
-            num_key_index = AI_MAPS.get('identifiers').index(num_key)
-            if num_key_index < len(AI_MAPS.get('identifiers')):
+            if num_key in AI_MAPS.get('identifiers'):
                 searching = False
-                pc_i = pc_length - i
                 numeric_primary_identifier = num_key
                 relevant_path_components = path_comp_reverse[:i + 1][::-1]
-                uri_stem_path_components = path_comp_reverse[: i + 2][::-1]
+                uri_stem_path_components = path_comp_reverse[i + 1:][::-1]
     if len(relevant_path_components) > 0:
         result['pathComponents'] = '/' + '/'.join(relevant_path_components)
     if len(uri_stem_path_components) > 0:

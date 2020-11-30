@@ -75,7 +75,7 @@ def calculate_check_digit(app_identifier, gs1_id_value):
             multiplier = 3
         else:
             multiplier = 1
-        total += d * multiplier
+        total += int(d) * multiplier
         counter += 1
     return (10 - total % 10) % 10
 

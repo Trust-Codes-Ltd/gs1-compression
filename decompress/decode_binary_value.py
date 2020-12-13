@@ -1,5 +1,5 @@
 from constants.table_f import TABLE_F
-from constants.alphabet import HEX_ALPHABET
+from constants.alphabet import HEX_ALPHABET, SAFE_BASE64_ALPHABET
 from utils import number_of_value_bits, number_of_length_bits
 
 
@@ -8,7 +8,7 @@ def build_string(num_char, alphabet, cursor, multiplier, binary_string):
     num_bits_for_value = multiplier * num_char
     sub_str = binary_string[cursor:cursor + num_bits_for_value]
     cursor += num_bits_for_value
-    indices = [int(sub_str[multiplier * i:multiplier], 2)
+    indices = [int(sub_str[multiplier * i:multiplier * (i + 1)], 2)
                for i in range(num_char)]
     string_ = ''.join([chr(int(index)) if multiplier == 7
                       else alphabet[index] for index in indices])
@@ -50,7 +50,8 @@ def handle_decodings(enc, binary_string, cursor, gs1_ai_array, key, num_char):
         cursor = result.get('cursor')
         gs1_ai_array[key] = result.get('s').upper()
     elif enc == 3:
-        result = build_string(num_char, HEX_ALPHABET, cursor, 6, binary_string)
+        result = build_string(
+            num_char, SAFE_BASE64_ALPHABET, cursor, 6, binary_string)
         cursor = result.get('cursor')
         gs1_ai_array[key] = result.get('s')
     elif enc == 4:
@@ -69,14 +70,14 @@ def decode_binary_value(key, gs1_array, binary_string, cursor):
         for type_dict in TABLE_F.get(key):
             if 'L' in type_dict.keys() and type_dict.get('E', '') == 'N':
                 # This indicates it's fixed length, so no length indicator
-                bits = number_of_value_bits(type_dict.get('L'))
-                sub_str = binary_string[cursor:bits]
+                bits = number_of_value_bits(int(type_dict.get('L')))
+                sub_str = binary_string[cursor:bits + cursor]
                 cursor += bits
-                s = "{0:b}".format(int(sub_str, 2)).zfill(type_dict.get('L'))
+                s = str(int(sub_str, 2)).zfill(int(type_dict.get('L')))
                 gs1_array[key] += s
             if 'M' in type_dict.keys() and type_dict.get('E', '') == 'N':
                 # handle variable-length numeric component
-                values = number_of_length_bits(type_dict.get('M'))
+                values = number_of_length_bits(int(type_dict.get('M')))
                 length_bits = binary_string[cursor:values]
                 cursor += values
                 num_digits = int(length_bits, 2)
@@ -102,7 +103,7 @@ def decode_binary_value(key, gs1_array, binary_string, cursor):
                 # Handle variable-length alphanumeric component
                 encoded_bits = binary_string[cursor:cursor + 3]
                 cursor += 3
-                values = number_of_length_bits(type_dict.get('M'))
+                values = number_of_length_bits(int(type_dict.get('M')))
                 length_bits = binary_string[cursor:cursor + values]
                 cursor += values
                 num_char = int(length_bits, 2)
@@ -111,6 +112,6 @@ def decode_binary_value(key, gs1_array, binary_string, cursor):
                                            gs1_array, key, num_char)
                 gs1_array = sub_str.get('gs1AIarray')
                 cursor = sub_str.get('cursor')
-    result['gs1Array'] = gs1_array
+    result['gs1AIarray'] = gs1_array
     result['cursor'] = cursor
     return result

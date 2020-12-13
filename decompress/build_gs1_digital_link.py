@@ -57,18 +57,18 @@ def build_gs1_digital_link(
             path = ''.join(['/', identifiers[0], '/',
                             percent_encode(gs1_ai_array[identifiers[0]])])
         if AI_QUALIFIER.get(identifiers[0]):
-            for key, value in AI_QUALIFIER.get(identifiers[0]).items():
+            for value in AI_QUALIFIER.get(identifiers[0]):
                 if value in qualifiers:
                     if use_short_text:
                         if AI_SHORT_CODE.get(value):
-                            path = ''.join(
+                            path += ''.join(
                                 ['/', AI_SHORT_CODE.get(value),
                                  '/', percent_encode(gs1_ai_array[value])])
                         else:
-                            path = ''.join(['/', value, '/',
+                            path += ''.join(['/', value, '/',
                                             percent_encode(gs1_ai_array[value])])
                     else:
-                        path = ''.join(['/', identifiers[0], '/',
+                        path += ''.join(['/', value, '/',
                                         percent_encode(gs1_ai_array[value])])
         if len(attributes) > 0:
             for key in attributes:
@@ -92,8 +92,8 @@ def build_gs1_digital_link(
         else:
             web_uri = uri_stem + path + query_string
         if len(other_keys) > 0:
-            query_string_array = [''.join([other_keys[key], '=',
-                                           gs1_ai_array[other_keys[key]]])
+            query_string_array = [''.join([key, '=',
+                                           gs1_ai_array[key]])
                                   for key in other_keys]
             if query_string == '':
                 web_uri += ''.join(['?', '&'.join(query_string_array)])

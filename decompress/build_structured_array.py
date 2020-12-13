@@ -37,8 +37,8 @@ def build_structured_array(gs1_ai_array, other_array):
                         json.dumps(result['identifiers']) +
                         "; please check for a syntax error")
     else:
-        verify_syntax(result['identifiers'][0],
-                      gs1_ai_array[result['identifiers'][0]])
-        verify_check_digit(result['identifiers'][0],
-                           gs1_ai_array[result['identifiers'][0]])
+        result_key = list(result['identifiers'][0].keys())
+        result_value = list(result['identifiers'][0].values())
+        verify_syntax(result_key[0], result_value[0])
+        verify_check_digit(result_key[0], result_value[0])
     return result

@@ -22,7 +22,7 @@ def decompress_binary_to_gs1_array(binary_string):
         if 0 <= d1 <= 9 and 0 <= d2 <= 9:
             # this means h1_h2 is between 00-99
             if h1_h2 in TABLE_P.keys():
-                num_digits = TABLE_P.get('h1_h2')
+                num_digits = TABLE_P.get(h1_h2)
                 if num_digits == 2:
                     app_identifier = h1_h2
                 elif num_digits in [3, 4]:

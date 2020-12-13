@@ -1,4 +1,4 @@
-from decompress.extract import extract_from_compressed_gs1_digital_link
+from decompress.analyse_uri import extract_from_compressed_gs1_digital_link
 from decompress.build_gs1_digital_link import build_gs1_digital_link
 from decompress.build_structured_array import build_structured_array
 

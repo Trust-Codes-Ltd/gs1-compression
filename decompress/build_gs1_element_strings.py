@@ -1,8 +1,7 @@
 import json
 
 from constants.ai_table import AI_MAPS, AI_QUALIFIER
-from decompress.extract import (extract_from_compressed_gs1_digital_link,
-                                extract_from_gs1_digital_link)
+
 from utils import verify_check_digit, verify_syntax, element_strings_push
 
 
@@ -37,7 +36,7 @@ def build_gs1_element_strings(gs1_ai_array, brackets: bool):
                             "; please check for a syntax error")
         else:
             verify_syntax(identifiers[0], gs1_ai_array[identifiers[0]])
-            verify_check_digit(identifiers[0], gs1_ai_array(identifiers[0]))
+            verify_check_digit(identifiers[0], gs1_ai_array[identifiers[0]])
             element_strings = element_strings_push(
                 element_strings, "(" + identifiers[0] + ")",
                 gs1_ai_array[identifiers[0]], ""
@@ -80,22 +79,3 @@ def build_gs1_element_strings(gs1_ai_array, brackets: bool):
             element_strings = element_strings_push(
                 element_strings, value, gs1_ai_array[value], gs)
     return ''.join(element_strings)
-
-
-def gs1_digital_link_to_gs1_element_strings(digital_link_uri, brackets):
-    """translate a GS1 Digital Link URI into
-    a string of concatenated GS1 element strings
-    """
-    return build_gs1_element_strings(
-        extract_from_gs1_digital_link(digital_link_uri).get('GS1'), brackets)
-
-
-def gs1_compressed_digital_link_to_gs1_element_strings(
-        digital_link_uri, brackets):
-    """
-    Translate a compressed GS1 Digital Link URI into a string of
-    concatenated GS1 element strings.
-    """
-    return build_gs1_element_strings(
-        extract_from_compressed_gs1_digital_link(
-            digital_link_uri).get('GS1'), brackets)

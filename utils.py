@@ -26,8 +26,13 @@ def number_of_value_bits(value_bits: int):
     return ceil(value_bits * log(10)/log(2) + 0.01)
 
 
-def base64_to_str(base64str):
-    """Convert a base64 string to a binary string."""
+def base64_to_str(base64str: str) -> str:
+    """
+    Convert a base64 string to a binary string. For each base64 character,
+    decoded binary string will be padded zeros to the left and make it 6 digits.
+
+    For example, 'AOC' will be decoded into '000000001110000010'.
+    """
     decimals = [SAFE_BASE64_ALPHABET.index(char) for char in base64str]
     binaries = ["{0:b}".format(decimal) for decimal in decimals]
     binaries = [binary if len(binary) >= 6 else binary.zfill(6)
@@ -56,6 +61,7 @@ def verify_syntax(app_identifier, value):
         if not AI_REGEX[app_identifier].match(value):
             raise Exception("SYNTAX ERROR: invalid syntax for value"
                             " of (" + app_identifier + ")" + value)
+        return True
 
 
 def calculate_check_digit(app_identifier, gs1_id_value):
@@ -131,10 +137,12 @@ def element_strings_push(element_strings, app_identifier, value, gs):
     return element_strings
 
 
-def percent_encode(input_string: str):
+def percent_encode(input_string: str) -> str:
     """
     Percent-code all reserved characters mentioned in the GS1 Digital Link
     standard.
+
+    For example, '#' will be percent-coded as '%23'.
     """
     escaped_chars = [''.join(['%', format(ord(char[0]), 'x').upper()])
                      if char in CHAR_TO_ESCAPE else char

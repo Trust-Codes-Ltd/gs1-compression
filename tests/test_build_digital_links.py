@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from decompress.build_gs1_digital_link import build_gs1_digital_link
+from gs1.decompress.build_gs1_digital_link import build_gs1_digital_link
 
 
 class TestBuildDigitalLink(TestCase):

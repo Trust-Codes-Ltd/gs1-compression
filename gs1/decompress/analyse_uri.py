@@ -6,9 +6,9 @@ from constants.regular_expressions import REGEX_ALL_NUM, REGEX_SAFE_64
 from constants.ai_table import SHORT_CODE_TO_NUMERIC, AI_MAPS, AI_REGEX
 from constants.path_sequence_constraints import PATH_SEQUENCE_CONSTRAINTS
 
-from decompress.build_structured_array import build_structured_array
-from decompress.build_gs1_element_strings import build_gs1_element_strings
-from decompress.binary_to_gs1_ai_array import decompress_binary_to_gs1_array
+from gs1.decompress.build_structured_array import build_structured_array
+from gs1.decompress.build_gs1_element_strings import build_gs1_element_strings
+from gs1.decompress.binary_to_gs1_ai_array import decompress_binary_to_gs1_array
 from utils import base64_to_str, verify_check_digit, verify_syntax, pad_gtin
 
 logger = logging.getLogger('__name__')
@@ -104,7 +104,6 @@ def extract_from_compressed_gs1_digital_link(gs1_digital_link_uri):
     """this method converts a compressed GS1 Digital Link URI into an
     associative array of GS1 Application Identifiers and their values.
     """
-    obj_gs1 = {}
     result = {}
 
     # set cursor to 0 - start reading from the left-most part of the

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from decompress.central_functions import decompress_gs1_digital_link
+from gs1.decompress.central_functions import decompress_gs1_digital_link
 
 
 class TestDecompressGS1DigitalLink(TestCase):

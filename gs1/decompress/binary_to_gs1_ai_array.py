@@ -2,7 +2,7 @@ from utils import binary_to_hex
 from constants.table_p import TABLE_P
 from constants.table_opt import TABLE_OPT
 from constants.alphabet import SAFE_BASE64_ALPHABET
-from decompress.decode_binary_value import decode_binary_value, handle_decodings
+from gs1.decompress.decode_binary_value import decode_binary_value, handle_decodings
 
 
 def decompress_binary_to_gs1_array(binary_string):

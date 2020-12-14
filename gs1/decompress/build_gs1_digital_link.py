@@ -1,6 +1,6 @@
 import json
 
-from decompress.build_gs1_element_strings import populate_list
+from gs1.decompress.build_gs1_element_strings import populate_list
 from constants.ai_table import AI_UNION_KEYS, AI_SHORT_CODE, AI_QUALIFIER
 from utils import verify_syntax, verify_check_digit, percent_encode
 

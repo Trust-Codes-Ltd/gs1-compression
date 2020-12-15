@@ -48,5 +48,10 @@ to use alphabetic mnemonic short names as defined in the GS1 Digital Link standa
 Set it `False` if you prefer the GS1 Digital Link URI to use all-numeric GS1
  application identifiers, e.g. /01/.
 
-Set the third parameter, `uri_stem` to a valid URI stem if you wish to construct 
-a GS1 Digital Link using a specific domain name.
+Set the third parameter, `uri_stem` to a valid URI prefix if you wish to construct 
+a GS1 Digital Link using a specific domain name. If it's set to be `None` or `''`,
+a default URI prefix `https://id.gs1.org` will be used.
+
+## Contributors
+
+- Di Zhu    di.zhu@trust.codes

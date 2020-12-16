@@ -1,4 +1,4 @@
-from utils import binary_to_hex
+from gs1.utils import binary_to_hex
 from constants.table_p import TABLE_P
 from constants.table_opt import TABLE_OPT
 from constants.alphabet import SAFE_BASE64_ALPHABET

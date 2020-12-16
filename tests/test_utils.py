@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from utils import (
+from gs1.utils import (
     number_of_value_bits, number_of_length_bits,
     base64_to_str, binary_to_hex, percent_encode,
     pad_gtin, element_strings_push, calculate_check_digit,

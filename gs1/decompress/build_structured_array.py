@@ -1,7 +1,7 @@
 import json
 
 from constants.ai_table import AI_MAPS
-from utils import verify_syntax, verify_check_digit
+from gs1.utils import verify_syntax, verify_check_digit
 
 
 def build_structured_array(gs1_ai_array, other_array):

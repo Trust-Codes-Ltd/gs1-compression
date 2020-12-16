@@ -2,7 +2,7 @@ import json
 
 from constants.ai_table import AI_MAPS, AI_QUALIFIER
 
-from utils import verify_check_digit, verify_syntax, element_strings_push
+from gs1.utils import verify_check_digit, verify_syntax, element_strings_push
 
 
 def populate_list(gs1_ai_array, key_name):

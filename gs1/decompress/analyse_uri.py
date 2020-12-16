@@ -9,7 +9,7 @@ from constants.path_sequence_constraints import PATH_SEQUENCE_CONSTRAINTS
 from gs1.decompress.build_structured_array import build_structured_array
 from gs1.decompress.build_gs1_element_strings import build_gs1_element_strings
 from gs1.decompress.binary_to_gs1_ai_array import decompress_binary_to_gs1_array
-from utils import base64_to_str, verify_check_digit, verify_syntax, pad_gtin
+from gs1.utils import base64_to_str, verify_check_digit, verify_syntax, pad_gtin
 
 logger = logging.getLogger('__name__')
 

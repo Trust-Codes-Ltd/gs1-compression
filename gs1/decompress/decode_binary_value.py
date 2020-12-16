@@ -1,6 +1,6 @@
 from constants.table_f import TABLE_F
 from constants.alphabet import HEX_ALPHABET, SAFE_BASE64_ALPHABET
-from utils import number_of_value_bits, number_of_length_bits
+from gs1.utils import number_of_value_bits, number_of_length_bits
 
 
 def build_string(num_char, alphabet, cursor, multiplier, binary_string):

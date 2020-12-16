@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="gs1-decompress-prototype",
+    name="gs1-compression",
     version="0.0.1",
     author="Di Zhu",
     author_email="di.zhu@trust.codes",

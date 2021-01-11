@@ -4,7 +4,9 @@
 .idea/
 
 .vscode/
-
+build/
+dist/
+*.egg-info
 .coverage/
 .sass-cache/
 

@@ -52,6 +52,12 @@ Set the third parameter, `uri_stem` to a valid URI prefix if you wish to constru
 a GS1 Digital Link using a specific domain name. If it's set to be `None` or `''`,
 a default URI prefix `https://id.gs1.org` will be used.
 
+Thanks to https://github.com/gs1/GS1DigitalLinkCompressionPrototype
+
 ## Contributors
 
 - Di Zhu    di.zhu@trust.codes
+
+## Sponsors
+
+- [Trustcodes](https://www.trust.codes/) Using anticounterfeit solutions and supply-chain traceability, Trust Codes® data-driven software connects brands to consumers with item level serialisation and world leading algorithms. 

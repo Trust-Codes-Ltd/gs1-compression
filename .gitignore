@@ -1,0 +1,21 @@
+# Created by .ignore support plugin (hsz.mobi)
+.DS_Store
+.coverage
+.idea/
+
+.vscode/
+
+.coverage/
+.sass-cache/
+
+*.pyc
+__pycache__/
+*.log
+local_settings.py
+
+GIT-REV-BRANCH
+GIT-REV-COMMIT
+
+*.env
+
+*.csv

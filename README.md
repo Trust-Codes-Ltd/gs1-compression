@@ -60,4 +60,4 @@ Thanks to https://github.com/gs1/GS1DigitalLinkCompressionPrototype
 
 ## Sponsors
 
-- [Trust Codes](https://www.trust.codes/) : Using anticounterfeit solutions and supply-chain traceability, Trust Codes® data-driven software connects brands to consumers with item level serialisation and world leading algorithms. 
+- [Trust Codes Limited](https://www.trust.codes/) : Using anti-counterfeit solutions and supply-chain traceability, Trust Codes® data-driven software connects brands to consumers with item level serialisation and world leading algorithms. 

@@ -38,7 +38,6 @@ def build_gs1_digital_link(
     other_keys = [a for a in gs1_ai_array.keys() if a not in AI_UNION_KEYS]
 
     if len(identifiers) != 1:
-        valid = False
         raise Exception("The element string should contain exactly one"
                         " primary identification key - it contained " +
                         str(len(identifiers)) + " " + json.dumps(identifiers) +

@@ -1,6 +1,7 @@
 from gs1.decompress.analyse_uri import extract_from_compressed_gs1_digital_link
 from gs1.decompress.build_gs1_digital_link import build_gs1_digital_link
 from gs1.decompress.build_structured_array import build_structured_array
+from gs1.decompress.deal_with_duplicates import deal_with_duplicates
 
 
 def decompress_gs1_digital_link(
@@ -20,6 +21,7 @@ def decompress_gs1_digital_link(
     extracted = extract_from_compressed_gs1_digital_link(
         compressed_digital_link_uri)
     gs1_ai_array = extracted.get('GS1')
+    gs1_ai_array = deal_with_duplicates(gs1_ai_array)
     other_array = extracted.get('other')
     return build_gs1_digital_link(
         gs1_ai_array, use_short_text, uri_stem, other_array)
@@ -45,5 +47,6 @@ def decompress_gs1_digital_link_to_structured_array(
     extracted = extract_from_compressed_gs1_digital_link(
         compressed_digital_link_uri)
     gs1_ai_array = extracted.get('GS1')
+    gs1_ai_array = deal_with_duplicates(gs1_ai_array)
     other_array = extracted.get('other')
     return build_structured_array(gs1_ai_array, other_array)

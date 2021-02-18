@@ -1,6 +1,14 @@
 # GS1 Digital Link Decompression Prototype in Python
 This is a Python translation of the JavaScript Toolkit that decompresses element strings to GS1 digital links.
 
+* [Background](#Background)
+* [Examples](#Examples)
+* [Installation](#Installation)
+* [Decompression](#Decompression)
+* [Contributors](#contributors)
+* [Legal Notice](#Legal Notice)
+* [License](#License)
+
 ## Background
 
 The GS1 identification system is widely used worldwide within product barcodes, as well as within barcodes for shipments, assets, locations and so on.
@@ -66,4 +74,10 @@ Thanks to https://github.com/gs1/GS1DigitalLinkCompressionPrototype
 
 In addition to the terms of the licence, this source code is provided by Trust Codes Limited, a New Zealand company, on an as-is basis, with no warranty expressed or implied. Neither Trust Codes Limited nor the contributors accept any liability for its use nor for any damages caused through its use. Trust Codes® is a registered trademark of Trust Codes Limited in New Zealand.
  
- All Rights Reserved. © Trust Codes Limited 2021.
+ All Rights Reserved.
+  
+  © Trust Codes Limited 2021.
+
+## License
+
+Apache-2.0 License

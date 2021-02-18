@@ -6,7 +6,7 @@ This is a Python translation of the JavaScript Toolkit that decompresses element
 * [Installation](#Installation)
 * [Decompression](#Decompression)
 * [Contributors](#contributors)
-* [Legal Notice](#Legal Notice)
+* [Legal Notice](#LegalNotice)
 * [License](#License)
 
 ## Background
@@ -70,7 +70,7 @@ Thanks to https://github.com/gs1/GS1DigitalLinkCompressionPrototype
 
 - [Trust Codes Limited](https://www.trust.codes/) : Using anti-counterfeit solutions and supply-chain traceability, Trust Codes® data-driven software connects brands to consumers with item level serialisation and world leading algorithms. 
 
-## Legal Notice
+## LegalNotice
 
 In addition to the terms of the licence, this source code is provided by Trust Codes Limited, a New Zealand company, on an as-is basis, with no warranty expressed or implied. Neither Trust Codes Limited nor the contributors accept any liability for its use nor for any damages caused through its use. Trust Codes® is a registered trademark of Trust Codes Limited in New Zealand.
  

@@ -148,3 +148,21 @@ def percent_encode(input_string: str) -> str:
                      if char in CHAR_TO_ESCAPE else char
                      for char in input_string]
     return ''.join(escaped_chars)
+
+
+def binary_to_base64(binary_string: str) -> str:
+    """
+    Convert binary string to base64 encoded string.
+
+    :param binary_string: Binary string.
+    :return: Base64 string.
+    """
+    quotient = 0
+    if len(binary_string) % 6 > 0:
+        quotient = len(binary_string) // 6
+        binary_string = binary_string.zfill((quotient + 1) * 6)
+    bin_fragments = [binary_string[6 * i: 6 * i + 6]
+                     for i in range(quotient + 1)]
+    result = ''.join([SAFE_BASE64_ALPHABET[int(fragment, 2)]
+                      for fragment in bin_fragments])
+    return result

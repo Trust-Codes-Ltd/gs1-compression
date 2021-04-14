@@ -1,4 +1,4 @@
-"""tableOpt is the ptimised encoding of combinations of GS1 Application
+"""tableOpt is the optimised encoding of combinations of GS1 Application
 Identifiers. It contains optimisations for pre-defined sequences of
 GS1 Application Identifiers. We'll initially use 0A-0F through 9A-9F
 to keep AH - EH unallocated and reserve FH for support for non-GS1 keys

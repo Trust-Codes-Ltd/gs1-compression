@@ -1,10 +1,10 @@
 # GS1 Digital Link Decompression Prototype in Python
-This is a Python translation of the JavaScript Toolkit that decompresses element strings to GS1 digital links.
+This package is a Python conversion of the [GS1 digital link compression prototype](https://github.com/gs1/GS1DigitalLinkCompressionPrototype) in Javascript.
 
 * [Background](#Background)
 * [Examples](#Examples)
 * [Installation](#Installation)
-* [Decompression](#Decompression)
+* [Usage](#Usage)
 * [Contributors](#contributors)
 * [Disclaimer](#disclaimer)
 * [License](#License)
@@ -27,9 +27,13 @@ See also https://github.com/gs1/digital-link.js for a related toolkit for GS1 Di
 
 ## Examples
 
-    https://dlnkd.tn.gg/01/09780345418913
+The following example uses the all-numeric application identifier `01` to indicate GTIN.
+
+    https://id.gs1.org/01/09780345418913
     
-    https://dlnkd.tn.gg/01/05412345000013/10/ABC%26%2B123?7003=1903061658&k1=v1
+The following example uses short texts `gtin` `lot` and `expdt` to indicate GTIN, lot number and expiry date. A non-GS1 key-value pair (k1, v1) also appeared in this example.
+
+    https://id.gs1.org/gtin/05412345000013/lot/ABC%26%2B123?expdt=1903061658&k1=v1
 
 ## Installation 
 
@@ -37,7 +41,9 @@ To install, make sure Python3 is installed, and installation in a virtual enviro
 
     $ pip install gs1-compression
     
-## Decompression
+## Usage
+
+### Decompression
 
 To decompress a compressed GS1 Digital Link URI, import `decompress_gs1_digital_link`:
 
@@ -45,10 +51,10 @@ To decompress a compressed GS1 Digital Link URI, import `decompress_gs1_digital_
 
 An example of decompression:
 
-    >>> compressed_uri = "https://dlnkd.tn.gg/ARHKVAdpQg"
-    >>> original_link = decompress_gs1_digital_link(compressed_uri, use_short_text=False, uri_stem="https://dlnkd.tn.gg")
+    >>> compressed_uri = "https://id.gs1.org/ARHKVAdpQg"
+    >>> original_link = decompress_gs1_digital_link(compressed_uri, use_short_text=False, uri_stem="id.gs1.org")
     >>> print("Original Link: " + original_link)
-        Original Link: https://dlnkd.tn.gg/01/09780345418913
+        Original Link: https://id.gs1.org/01/09780345418913
 The `decompress_gs1_digital_link` function has three parameters.
 
 Set the second parameter, `use_short_text=True` if you prefer the GS1 Digital Link URI 
@@ -60,7 +66,27 @@ Set the third parameter, `uri_stem` to a valid URI prefix if you wish to constru
 a GS1 Digital Link using a specific domain name. If it's set to be `None` or `''`,
 a default URI prefix `https://id.gs1.org` will be used.
 
-Thanks to https://github.com/gs1/GS1DigitalLinkCompressionPrototype
+### Compression
+To compress a full-length GS1 digital link, import `compress_gs1_digital_link`:
+
+    >>> from gs1 import compress_gs1_digital_link
+
+A code snippet of GS1 digital link compression:
+
+    >>> full_uri = "https://id.gs1.org/gtin/9421902960055/lot/2010005828/ser/xyz1234"
+    >>> compressed_link = compress_gs1_digital_link(digital_link_uri=full_uri, uri_stem="https://id.gs1.org", use_optimization=False, compress_other_key_value_pairs=False)
+    >>> print("Compressed Link: " + compressed_link)
+        Compressed Link: https://id.gs1.org/AREjalurbiAUO-cgohCz45Z67b8A
+
+There are four parameters in the function: 
+
+- Pass the full length URI in the `digital_link_uri` parameter.
+
+- Pass the URI prefix in the `uri_stem` parameter. Normally you might want to be the same as the full-length URI's prefix.
+
+- Set `use_optimization=True` if you would like to use optimized encoding of GS1 application identifiers and save more characters in the compressed string.
+
+- Set `compress_other_key_value_pairs=True` if you would like to compress non-GS1 key-value pairs in the full URI.
 
 ## Contributors
 

@@ -52,13 +52,12 @@ def compress_gs1_ai_array_to_binary(
                                for value in opt_array.values()])
     # Then append this further, by encoding binary string values for any other
     # AI key-value pairs, for which no optimisations were found.
-    binary_str += ''.join(
-        [
-            binary_encoding_gs1_ai_key(key) +
-            binary_encoding_value(gs1_ai_array, key)
-            for key in gs1_keys if key in gs1_ai_array.keys()
-         ]
-    )
+    bin_lists = [
+        binary_encoding_gs1_ai_key(key) +
+        binary_encoding_value(gs1_ai_array, key)
+        for key in gs1_keys if key in gs1_ai_array.keys()
+    ]
+    binary_str += ''.join(bin_lists)
     # Then if any non-GS1 key=value pairs were also to be compressed, also
     # compress those and append to the binary string.
 
@@ -73,18 +72,18 @@ def compress_gs1_ai_array_to_binary(
             length_bits = "{0:b}".format(len(key)).zfill(7)
             binary_str += '1111'  # flag for non-GS1 keys that will follow
             binary_str += length_bits
-            binary_str += ''.join(
+            binary_key = ''.join(
                 [
-                    "{0:b}".format(SAFE_BASE64_ALPHABET.get(char_)).zfill(6)
+                    "{0:b}".format(SAFE_BASE64_ALPHABET.index(char_)).zfill(6)
                     for char_ in key
                 ])
+            binary_str += binary_key
             binary_str += binary_encoding_non_gs1_value(value)
     return binary_str
 
 
 def build_compressed_gs1_digital_link(
         gs1_ai_array,
-        use_short_text,
         uri_stem: str,
         use_optimizations,
         compress_other_keypairs,
@@ -95,7 +94,6 @@ def build_compressed_gs1_digital_link(
     Build a compressed gs1 digital link with a GS1 application identifier array.
 
     :param gs1_ai_array: GS1 application identifier array.
-    :param use_short_text: boolean, indicating if short text (gtin) is used.
     :param uri_stem: URI prefix. Default being https://id.gs1.org
     :param use_optimizations: Boolean.
     :param compress_other_keypairs: Boolean.

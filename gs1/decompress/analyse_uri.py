@@ -46,11 +46,13 @@ def extract_from_gs1_digital_link(gs1_digital_link_uri):
     uri_path_info = analyse_result.get('uriPathInfo')
     path_candidates = analyse_result.get('pathCandidates')
     split_path = uri_path_info.split('/')[1:]
-    ai_sequence = [
-        SHORT_CODE_TO_NUMERIC[split_path[i]]
-        for i in reversed(range(len(split_path)))
-        if i % 2 == 0 and REGEX_ALL_NUM.match(split_path[i])
-    ]
+    ai_sequence = []
+    for i in reversed(range(len(split_path))):
+        if i % 2 == 0:
+            k = split_path[i]
+            if not REGEX_ALL_NUM.match(split_path[i]):
+                k = SHORT_CODE_TO_NUMERIC[k]
+            ai_sequence.append(k)
     ai_sequence = ai_sequence[::-1]
 
     # check that the URI path components appear in the correct sequence.
@@ -75,23 +77,32 @@ def extract_from_gs1_digital_link(gs1_digital_link_uri):
 
     # Merge path_candidates and query_string_candidates into
     # a combined associative array - candidates.
-    candidates = path_candidates.update(query_string_candidates)
-    for key, value in candidates.items():
+    path_candidates.update(query_string_candidates)
+    key_non_num = []
+    keys_num = []
+    for key, value in path_candidates.items():
         if not REGEX_ALL_NUM.match(key):
             # For keys that are not all-numeric,
             # attempt to convert to all-numeric AI equivalent.
             if key in SHORT_CODE_TO_NUMERIC.keys():
-                num_key = SHORT_CODE_TO_NUMERIC[key]
-                candidates[num_key] = candidates[key]
+                keys_num.append(key)
             else:
                 # Otherwise remove from candidates map if
                 # it doesn't relate to a GS1 Application Identifier.
-                non_gs1_query_string_candidates[key] = candidates[key]
-            candidates.pop(key)
+                non_gs1_query_string_candidates[key] = path_candidates[key]
+                key_non_num.append(key)
+    if key_non_num:
+        for key in key_non_num:
+            path_candidates.pop(key)
+    if keys_num:
+        for key in keys_num:
+            num_key = SHORT_CODE_TO_NUMERIC[key]
+            path_candidates[num_key] = path_candidates[key]
+            path_candidates.pop(key)
 
     # Check that each entry in the associative array has the correct syntax
     # and correct digit (where appropriate).
-    for key, value in candidates.items():
+    for key, value in path_candidates.items():
         verify_syntax(key, value)
         verify_check_digit(key, value)
         obj_gs1[key] = pad_gtin(key, value)

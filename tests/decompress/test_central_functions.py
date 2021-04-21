@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from gs1.decompress.central_functions import decompress_gs1_digital_link
+from gs1.decompress.core_functions import decompress_gs1_digital_link
 
 
 class TestDecompressGS1DigitalLink(TestCase):
@@ -19,5 +19,5 @@ class TestDecompressGS1DigitalLink(TestCase):
                 False, "http://example.org"
             ),
             "http://example.org/01/05412345000013/10/ABC%26%2B123?7003="
-            "1903061658&expdt=1903061658&k1=v1"
+            "1903061658&k1=v1"
         )

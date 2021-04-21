@@ -13,13 +13,13 @@ def determine_encoding(char_string) -> int:
     :param char_string: String.
     :return: the type of encoding.
     """
-    if REGEX_SAFE_64.match(char_string):
+    if REGEX_SAFE_64.match(char_string) and not REGEX_ALL_NUM.match(char_string):
         return 3
-    elif REGEX_HEX_LOWER.match(char_string):
+    elif REGEX_HEX_LOWER.match(char_string) and not REGEX_ALL_NUM.match(char_string):
         return 1
-    elif REGEX_HEX_UPPER.match(char_string):
+    elif REGEX_HEX_UPPER.match(char_string) and not REGEX_ALL_NUM.match(char_string):
         return 2
-    elif REGEX_ALL_NUM(char_string):
+    elif REGEX_ALL_NUM.match(char_string):
         return 0
     else:
         return 4
@@ -104,10 +104,10 @@ def binary_encoding_value(gs1_ai_array: dict, key: str):
         for ai_value in TABLE_F.get(key):
             if 'L' in ai_value.keys() and ai_value.get('E') == "N":
                 # Handle fixed-length numeric component
-                char_str = value[cursor:cursor + ai_value.get('L')]
+                char_str = value[cursor:cursor + int(ai_value.get('L'))]
                 cursor += int(ai_value.get('L'))
                 binary_value = "{0:b}".format(int(char_str)).zfill(
-                    number_of_value_bits(ai_value.get('L')))
+                    number_of_value_bits(int(ai_value.get('L'))))
                 binary_str += binary_value
             if 'M' in ai_value.keys() and ai_value.get('E') == "N":
                 # Handle variable-length numeric component
@@ -120,7 +120,7 @@ def binary_encoding_value(gs1_ai_array: dict, key: str):
                 binary_str += length_bits + binary_value
             if 'L' in ai_value.keys() and ai_value.get('E') == "X":
                 # Handle fixed-length alphanumeric component
-                char_str = value[cursor: cursor + ai_value.get('L')]
+                char_str = value[cursor: cursor + int(ai_value.get('L'))]
                 cursor += int(ai_value.get('L'))
                 encoding_type = determine_encoding(char_str)
                 length_bits = ''
@@ -131,7 +131,7 @@ def binary_encoding_value(gs1_ai_array: dict, key: str):
                 char_str = value[cursor:]
                 cursor += len(char_str)
                 length_bits = "{0:b}".format(len(char_str)).zfill(
-                    number_of_length_bits(ai_value.get('M')))
+                    number_of_length_bits(int(ai_value.get('M'))))
                 encoding_type = determine_encoding(char_str)
                 binary_str = handle_encoding(
                     encoding_type, length_bits, char_str, binary_str)

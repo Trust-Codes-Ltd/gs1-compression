@@ -1,4 +1,5 @@
 from constants.table_opt import TABLE_OPT
+from constants.ai_table import AI_MAPS
 
 
 def find_candidates_from_table_opt(key_list, table_opt=TABLE_OPT):
@@ -42,3 +43,24 @@ def remove_optimized_key_from_ai_list(key_list: list, optimized_dict: dict):
             ind = key_list.index(value)
             key_list.pop(ind)
     return key_list
+
+
+def separate_id_non_id(gs1_ai_array):
+    """
+    Separate the identifiers from non-identifiers in a GS1 application
+    identifier array.
+
+    :param gs1_ai_array: GS1 application identifier array.
+    :return: A dict object with separate parts of the array.
+    """
+    result = {}
+    id_array = {}
+    non_id_array = {}
+    for key in gs1_ai_array.keys():
+        if key in AI_MAPS.get('identifiers'):
+            id_array[key] = gs1_ai_array.get(key)
+        else:
+            non_id_array[key] = gs1_ai_array.get(key)
+    result['ID'] = id_array
+    result['nonID'] = non_id_array
+    return result

@@ -5,6 +5,8 @@ from gs1.decompress.core_functions import build_gs1_digital_link
 from gs1.compress.build_compressed_gs1_digital_link import (
     build_compressed_gs1_digital_link, compress_gs1_ai_array_to_binary)
 from gs1.compress.utils import separate_id_non_id
+from gs1.compress.extract_from_element_strings import (
+    extract_from_element_strings)
 from gs1.utils import binary_to_base64
 from constants.regular_expressions import REGEX_ALL_NUM
 from constants.ai_table import SHORT_CODE_TO_NUMERIC
@@ -50,7 +52,7 @@ def element_string_to_compressed_gs1_digital_link(
         use_optimization=False
 ):
     """Build a compressed GS1 digital link from an element string."""
-    gs1_ai_array = extract_from_gs1_digital_link(element_string)
+    gs1_ai_array = extract_from_element_strings(element_string)
     separated_result = separate_id_non_id(gs1_ai_array)
     if uncompressed_primary:
         compressed_non_id_part = compress_gs1_ai_array_to_binary(

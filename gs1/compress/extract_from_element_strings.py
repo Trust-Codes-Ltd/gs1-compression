@@ -27,13 +27,13 @@ def extract_from_element_strings(element_strings: str):
             results = re.findall(REGEX_BRACKETED, element_strings)
             for i, result in enumerate(results):
                 if i % 2 == 0:
-                    k = result[1:len(result) - 1]
+                    k = result[0]
                 elif k in ai_keys:
-                    if AI_REGEX[k].match(result):
-                        obj[k] = result
+                    if AI_REGEX[k].match(result[1]):
+                        obj[k] = result[1]
                     else:
                         raise("SYNTAX ERROR: invalid syntax for value of (" +
-                              k + ") : " + result)
+                              k + ") : " + result[1])
             return obj
         else:
             element_strings_length = len(element_strings)

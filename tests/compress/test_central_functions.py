@@ -13,6 +13,7 @@ class TestCentralFunctions(TestCase):
             "https://truea2.com/01/05412345000013/10/"
             "ABC%26%2B123?7003=1903061658&k1=v1"
         )
+        self.element_string = "(01)00614141123452(3103)000500"
 
     def test_compress_gs1_digital_link(self):
         """Test compressing a digital link."""
@@ -25,3 +26,10 @@ class TestCentralFunctions(TestCase):
         )
         self.assertEqual(result_long.split('/')[-1],
                          'AQnYUc1gmiERBhQ0ytiyZuAGOLc1TXgpNWCv1')
+
+    def test_element_string_to_compressed_gs1_digital_link(self):
+        """Test compressing a digital link element string."""
+        result = element_string_to_compressed_gs1_digital_link(
+            self.element_string, False, 'https://truea2.com', False, False
+        )
+        self.assertEqual(result, 'https://truea2.com/AQEd-1O2-GIGAD6A')

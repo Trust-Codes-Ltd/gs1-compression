@@ -177,6 +177,5 @@ def by_length(element, length):
 
 
 AI_BY_LENGTH = [
-    {i: get_AIs([ai for ai in AI_TABLE if by_length(ai, i)])}
-    for i in [2, 3, 4]
+    application_dict.get('ai') for application_dict in AI_TABLE
 ]

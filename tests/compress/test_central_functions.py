@@ -7,29 +7,38 @@ class TestCentralFunctions(TestCase):
     """Test the core functions to compress a digital link."""
     def setUp(self):
         """Test class setup."""
-        self.long_digital_link = ('https://truea2.com/gtin/9421902960055/'
+        self.long_digital_link = ('https://id.gs1.org/gtin/9421902960055/'
                                   'lot/2010005828/ser/xyz1234')
         self.expansive_link = (
-            "https://truea2.com/01/05412345000013/10/"
+            "https://id.gs1.org/01/05412345000013/10/"
             "ABC%26%2B123?7003=1903061658&k1=v1"
         )
         self.element_string = "(01)00614141123452(3103)000500"
+        self.element_string_no_bracket = (
+                "3103000189010541234500001339232172" + '\x1d' + '10ABC123')
 
     def test_compress_gs1_digital_link(self):
         """Test compressing a digital link."""
         result = compress_gs1_digital_link(
-            self.long_digital_link, 'https://truea2.com')
+            self.long_digital_link, 'https://id.gs1.org')
         self.assertEqual(
-            result, "https://truea2.com/AREjalurbiAUO-cgohCz45Z67b8A")
+            result, "https://id.gs1.org/AREjalurbiAUO-cgohCz45Z67b8A")
         result_long = compress_gs1_digital_link(
-            self.expansive_link, 'https://truea2.com', None, True
+            self.expansive_link, 'https://id.gs1.org', None, True
         )
         self.assertEqual(result_long.split('/')[-1],
                          'AQnYUc1gmiERBhQ0ytiyZuAGOLc1TXgpNWCv1')
 
     def test_element_string_to_compressed_gs1_digital_link(self):
         """Test compressing a digital link element string."""
+        """
         result = element_string_to_compressed_gs1_digital_link(
-            self.element_string, False, 'https://truea2.com', False, False
+            self.element_string, False, 'https://id.gs1.org', False, False
         )
-        self.assertEqual(result, 'https://truea2.com/AQEd-1O2-GIGAD6A')
+        self.assertEqual(result, 'https://id.gs1.org/AQEd-1O2-GIGAD6A')
+        """
+        result_no_bracket = element_string_to_compressed_gs1_digital_link(
+            self.element_string_no_bracket, False, 'https://id.gs1.org',
+            False, False)
+        self.assertEqual(result_no_bracket,
+                         'https://id.gs1.org/AQnYUc1gmiCNV4JGYgYAF6ckaEPg')

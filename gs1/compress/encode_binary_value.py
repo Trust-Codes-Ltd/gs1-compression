@@ -13,14 +13,14 @@ def determine_encoding(char_string) -> int:
     :param char_string: String.
     :return: the type of encoding.
     """
-    if REGEX_SAFE_64.match(char_string) and not REGEX_ALL_NUM.match(char_string):
-        return 3
-    elif REGEX_HEX_LOWER.match(char_string) and not REGEX_ALL_NUM.match(char_string):
-        return 1
-    elif REGEX_HEX_UPPER.match(char_string) and not REGEX_ALL_NUM.match(char_string):
-        return 2
-    elif REGEX_ALL_NUM.match(char_string):
+    if REGEX_ALL_NUM.match(char_string):
         return 0
+    elif REGEX_HEX_UPPER.match(char_string):
+        return 2
+    elif REGEX_HEX_LOWER.match(char_string):
+        return 1
+    elif REGEX_SAFE_64.match(char_string):
+        return 3
     else:
         return 4
 
@@ -114,7 +114,7 @@ def binary_encoding_value(gs1_ai_array: dict, key: str):
                 char_str = value[cursor:]
                 cursor += len(char_str)
                 length_bits = "{0:b}".format(len(char_str)).zfill(
-                    number_of_length_bits(ai_value.get('M')))
+                    number_of_length_bits(int(ai_value.get('M'))))
                 binary_value = "{0:b}".format(int(char_str)).zfill(
                     number_of_value_bits(len(char_str)))
                 binary_str += length_bits + binary_value

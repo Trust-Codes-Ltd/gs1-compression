@@ -2,7 +2,7 @@ from math import ceil, log
 
 from constants.alphabet import SAFE_BASE64_ALPHABET
 from constants.regular_expressions import REGEX_ALL_NUM, CHAR_TO_ESCAPE
-from constants.ai_table import AI_REGEX, AI_CHECK_DIGIT_POSITION
+from constants.ai_table import AI_REGEX, AI_CHECK_DIGIT_POSITION, AI_TABLE
 
 
 def number_of_length_bits(length: int):
@@ -148,3 +148,34 @@ def percent_encode(input_string: str) -> str:
                      if char in CHAR_TO_ESCAPE else char
                      for char in input_string]
     return ''.join(escaped_chars)
+
+
+def binary_to_base64(binary_string: str) -> str:
+    """
+    Convert binary string to base64 encoded string.
+
+    :param binary_string: Binary string.
+    :return: Base64 string.
+    """
+    if len(binary_string) % 6 > 0:
+        quotient = len(binary_string) // 6
+        binary_string = binary_string.ljust((quotient + 1) * 6, '0')
+    num_char = len(binary_string) // 6
+    bin_fragments = [binary_string[6 * i: 6 * i + 6]
+                     for i in range(num_char)]
+    result = ''.join([SAFE_BASE64_ALPHABET[int(fragment, 2)]
+                      for fragment in bin_fragments])
+    return result
+
+
+def get_AIs(ai_list):
+    return [item.get('ai') for item in ai_list]
+
+
+def by_length(element, length):
+    return len(element.get('ai')) == length
+
+
+AI_BY_LENGTH = [
+    application_dict.get('ai') for application_dict in AI_TABLE
+]

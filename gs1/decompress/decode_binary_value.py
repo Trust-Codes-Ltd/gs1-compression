@@ -78,11 +78,11 @@ def decode_binary_value(key, gs1_array, binary_string, cursor):
             if 'M' in type_dict.keys() and type_dict.get('E', '') == 'N':
                 # handle variable-length numeric component
                 values = number_of_length_bits(int(type_dict.get('M')))
-                length_bits = binary_string[cursor:values]
+                length_bits = binary_string[cursor:values + cursor]
                 cursor += values
                 num_digits = int(length_bits, 2)
                 num_bits_for_value = number_of_value_bits(num_digits)
-                sub_str = binary_string[cursor:num_bits_for_value]
+                sub_str = binary_string[cursor:num_bits_for_value + cursor]
                 cursor += num_bits_for_value
                 if num_digits:
                     s = "{0:b}".format(int(sub_str, 2))

@@ -1,4 +1,5 @@
 from math import ceil, log
+from urllib.parse import urlparse
 
 from constants.alphabet import SAFE_BASE64_ALPHABET
 from constants.regular_expressions import REGEX_ALL_NUM, CHAR_TO_ESCAPE
@@ -179,3 +180,10 @@ def by_length(element, length):
 AI_BY_LENGTH = [
     application_dict.get('ai') for application_dict in AI_TABLE
 ]
+
+
+def parse_url(url: str):
+    """Parse a url and return host and path."""
+    parse_result = urlparse(url)
+    prefix = parse_result[0] + '://' + parse_result[1]
+    return prefix, parse_result[2]

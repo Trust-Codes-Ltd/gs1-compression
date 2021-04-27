@@ -21,30 +21,25 @@ class TestCentralFunctions(TestCase):
 
     def test_compress_gs1_digital_link(self):
         """Test compressing a digital link."""
-        result = compress_gs1_digital_link(
-            self.long_digital_link, 'https://id.gs1.org')
+        result = compress_gs1_digital_link(self.long_digital_link)
         self.assertEqual(
             result, "https://id.gs1.org/AREjalurbiAUO-cgohCz45Z67b8A")
         result_long = compress_gs1_digital_link(
-            self.expansive_link, 'https://id.gs1.org', None, True
-        )
+            self.expansive_link, False, True)
         self.assertEqual(result_long.split('/')[-1],
                          'AQnYUc1gmiERBhQ0ytiyZuAGOLc1TXgpNWCv1')
-        result_sscc = compress_gs1_digital_link(
-            self.link_sscc, 'https://id.gs1.org')
+        result_sscc = compress_gs1_digital_link(self.link_sscc)
         self.assertEqual(result_sscc.split('/')[-1], 'ABeRcNWtKMPA')
-        result_gln = compress_gs1_digital_link(
-            self.link_gln, 'https://id.gs1.org')
+        result_gln = compress_gs1_digital_link(self.link_gln)
         self.assertEqual(result_gln.split('/')[-1], 'QUCO_anbfA')
 
     def test_element_string_to_compressed_gs1_digital_link(self):
         """Test compressing a digital link element string."""
-        """
         result = element_string_to_compressed_gs1_digital_link(
             self.element_string, False, 'https://id.gs1.org', False, False
         )
         self.assertEqual(result, 'https://id.gs1.org/AQEd-1O2-GIGAD6A')
-        """
+
         result_no_bracket = element_string_to_compressed_gs1_digital_link(
             self.element_string_no_bracket, False, 'https://id.gs1.org',
             False, False)

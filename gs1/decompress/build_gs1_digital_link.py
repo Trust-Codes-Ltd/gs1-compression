@@ -1,8 +1,12 @@
 import json
+import logging
+import traceback
 
 from gs1.decompress.build_gs1_element_strings import populate_list
 from constants.ai_table import AI_UNION_KEYS, AI_SHORT_CODE, AI_QUALIFIER
 from gs1.utils import verify_syntax, verify_check_digit, percent_encode
+
+logger = logging.getLogger('__name__')
 
 
 def build_gs1_digital_link(
@@ -38,10 +42,11 @@ def build_gs1_digital_link(
     other_keys = [a for a in gs1_ai_array.keys() if a not in AI_UNION_KEYS]
 
     if len(identifiers) != 1:
-        raise Exception("The element string should contain exactly one"
-                        " primary identification key - it contained " +
-                        str(len(identifiers)) + " " + json.dumps(identifiers) +
-                        "; please check for a syntax error")
+        logger.error('Stack trace:\n{}'.format(traceback.format_exc()))
+        raise ValueError("The element string should contain exactly one"
+                         " primary identification key - it contained " +
+                         str(len(identifiers)) + " " + json.dumps(identifiers) +
+                         "; please check for a syntax error")
     else:
         verify_syntax(identifiers[0], gs1_ai_array[identifiers[0]])
         verify_check_digit(identifiers[0], gs1_ai_array[identifiers[0]])

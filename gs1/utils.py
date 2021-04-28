@@ -1,8 +1,13 @@
+import logging
+import traceback
 from math import ceil, log
 
 from constants.alphabet import SAFE_BASE64_ALPHABET
 from constants.regular_expressions import REGEX_ALL_NUM, CHAR_TO_ESCAPE
 from constants.ai_table import AI_REGEX, AI_CHECK_DIGIT_POSITION, AI_TABLE
+
+
+logger = logging.getLogger('__name__')
 
 
 def number_of_length_bits(length: int):
@@ -59,8 +64,9 @@ def verify_syntax(app_identifier, value):
     """
     if app_identifier and REGEX_ALL_NUM.match(app_identifier):
         if not AI_REGEX[app_identifier].match(value):
-            raise Exception("SYNTAX ERROR: invalid syntax for value"
-                            " of (" + app_identifier + ")" + value)
+            logger.error('Stack trace:\n{}'.format(traceback.format_exc()))
+            raise ValueError("SYNTAX ERROR: invalid syntax for value"
+                             " of (" + app_identifier + ")" + value)
         return True
 
 
@@ -102,12 +108,13 @@ def verify_check_digit(app_identifier, gs1_id_value):
             check_digit_position = int(check_digit_position)
         actual_check_digit = int(gs1_id_value[check_digit_position - 1])
         if actual_check_digit != expected_check_digit:
-            raise Exception("INVALID CHECK DIGIT:  An invalid check digit was"
-                            " found for the primary identification key (" +
-                            app_identifier + ")" + gs1_id_value +
-                            " ; the correct check digit should be " +
-                            str(expected_check_digit) + " at position " +
-                            str(check_digit_position))
+            logger.error('Stack trace:\n{}'.format(traceback.format_exc()))
+            raise ValueError("INVALID CHECK DIGIT:  An invalid check digit was"
+                             " found for the primary identification key (" +
+                             app_identifier + ")" + gs1_id_value +
+                             " ; the correct check digit should be " +
+                             str(expected_check_digit) + " at position " +
+                             str(check_digit_position))
     return result
 
 

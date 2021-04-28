@@ -1,7 +1,11 @@
 import json
+import logging
+import traceback
 
 from constants.ai_table import AI_MAPS
 from gs1.utils import verify_syntax, verify_check_digit
+
+logger = logging.getLogger('__name__')
 
 
 def build_structured_array(gs1_ai_array, other_array):
@@ -31,11 +35,12 @@ def build_structured_array(gs1_ai_array, other_array):
         b = {key: value}
         result['other'].append(b)
     if len(result.get('identifiers')) != 1:
-        raise Exception("The element string should contain exactly one primary"
-                        " identification key - it contained " +
-                        str(len(result['identifiers'])) + " " +
-                        json.dumps(result['identifiers']) +
-                        "; please check for a syntax error")
+        logger.error('Stack trace:\n{}'.format(traceback.format_exc()))
+        raise ValueError("The element string should contain exactly one primary"
+                         " identification key - it contained " +
+                         str(len(result['identifiers'])) + " " +
+                         json.dumps(result['identifiers']) +
+                         "; please check for a syntax error")
     else:
         result_key = list(result['identifiers'][0].keys())
         result_value = list(result['identifiers'][0].values())

@@ -5,10 +5,11 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="gs1-compression",
-    version="0.0.9",
+    version="0.1.1",
     author="Di Zhu",
     author_email="di.zhu@trust.codes",
-    description="A Python package to decompress compressed GS1 digital link",
+    description=("A Python package to handle compression"
+                 " and decompression of GS1 digital links"),
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Trust-Codes-Ltd/gs1-compression",

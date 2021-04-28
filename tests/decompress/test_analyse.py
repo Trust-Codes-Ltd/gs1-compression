@@ -27,14 +27,14 @@ class TestAnalyseURI(TestCase):
     """Test case for the analyse URI function."""
     def test_analyse_uri(self):
         """Test the function analyse_uri."""
-        # analysed_result = analyse_uri('https://dlnkd.tn.gg/ARHKVAdpQg', False)
-        # self.assertEqual(analysed_result.get('compressedPath'), 'ARHKVAdpQg')
-        # self.assertEqual(analysed_result.get('uriPathInfo'), '/ARHKVAdpQg')
-        extended_result = analyse_uri('https://dlnkd.tn.gg/ARHKVAdpQg', True)
+        analysed_result = analyse_uri('https://id.gs1.org/ARHKVAdpQg', False)
+        self.assertEqual(analysed_result.get('compressedPath'), 'ARHKVAdpQg')
+        self.assertEqual(analysed_result.get('uriPathInfo'), '/ARHKVAdpQg')
+        extended_result = analyse_uri('https://id.gs1.org/ARHKVAdpQg', True)
         self.assertEqual(extended_result.get('elementStringsOutput'),
                          "(01)09780345418913")
 
     def test_extract(self):
         result = extract_from_compressed_gs1_digital_link(
-            'https://dlnkd.tn.gg/ARHKVAdpQg')
+            'https://id.gs1.org/ARHKVAdpQg')
         self.assertEqual(result.get('GS1').get('01'), '09780345418913')

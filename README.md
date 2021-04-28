@@ -31,7 +31,7 @@ The following example uses the all-numeric application identifier `01` to indica
 
     https://id.gs1.org/01/09780345418913
     
-The following example uses short texts `gtin` `lot` and `expdt` to indicate GTIN, lot number and expiry date. A non-GS1 key-value pair (k1, v1) also appeared in this example.
+The following example uses short texts `gtin` `lot` and `expdt` to indicate GTIN, lot number and expiry date. A non-GS1 key-value pair `{'k1': 'v1'}` also appeared in this example.
 
     https://id.gs1.org/gtin/05412345000013/lot/ABC%26%2B123?expdt=1903061658&k1=v1
 
@@ -39,7 +39,7 @@ The following example uses short texts `gtin` `lot` and `expdt` to indicate GTIN
 
 To install, make sure Python3 is installed, and installation in a virtual environment is preferred.
 
-    $ pip install gs1-compression
+    $ pip install --upgrade gs1-compression
     
 ## Usage
 
@@ -52,19 +52,15 @@ To decompress a compressed GS1 Digital Link URI, import `decompress_gs1_digital_
 An example of decompression:
 
     >>> compressed_uri = "https://id.gs1.org/ARHKVAdpQg"
-    >>> original_link = decompress_gs1_digital_link(compressed_uri, use_short_text=False, uri_stem="id.gs1.org")
+    >>> original_link = decompress_gs1_digital_link(compressed_uri, use_short_text=False)
     >>> print("Original Link: " + original_link)
         Original Link: https://id.gs1.org/01/09780345418913
-The `decompress_gs1_digital_link` function has three parameters.
+The `decompress_gs1_digital_link` function has two parameters.
 
 Set the second parameter, `use_short_text=True` if you prefer the GS1 Digital Link URI 
 to use alphabetic mnemonic short names as defined in the GS1 Digital Link standard, e.g. /gtin/. 
 Set it `False` if you prefer the GS1 Digital Link URI to use all-numeric GS1
- application identifiers, e.g. /01/.
-
-Set the third parameter, `uri_stem` to a valid URI prefix if you wish to construct 
-a GS1 Digital Link using a specific domain name. If it's set to be `None` or `''`,
-a default URI prefix `https://id.gs1.org` will be used.
+ application identifiers, e.g. `/01/`.
 
 ### Compression
 To compress a full-length GS1 digital link, import `compress_gs1_digital_link`:
@@ -74,7 +70,7 @@ To compress a full-length GS1 digital link, import `compress_gs1_digital_link`:
 A code snippet of GS1 digital link compression:
 
     >>> full_uri = "https://id.gs1.org/gtin/9421902960055/lot/2010005828/ser/xyz1234"
-    >>> compressed_link = compress_gs1_digital_link(digital_link_uri=full_uri, uri_stem="https://id.gs1.org", use_optimization=False, compress_other_key_value_pairs=False)
+    >>> compressed_link = compress_gs1_digital_link(digital_link_uri=full_uri, use_optimization=False, compress_other_key_value_pairs=False)
     >>> print("Compressed Link: " + compressed_link)
         Compressed Link: https://id.gs1.org/AREjalurbiAUO-cgohCz45Z67b8A
 
@@ -84,9 +80,9 @@ There are four parameters in the function:
 
 - Pass the URI prefix in the `uri_stem` parameter. Normally you might want to be the same as the full-length URI's prefix.
 
-- Set `use_optimization=True` if you would like to use optimized encoding of GS1 application identifiers and save more characters in the compressed string.
+- Set `use_optimization=True` if you would like to use optimized encoding of GS1 application identifiers and save more characters in the compressed string. By default, it's set to be `False`.
 
-- Set `compress_other_key_value_pairs=True` if you would like to compress non-GS1 key-value pairs in the full URI.
+- Set `compress_other_key_value_pairs=True` if you would like to compress non-GS1 key-value pairs in the full URI. By default, it's set to be `False`.
 
 ## Contributors
 

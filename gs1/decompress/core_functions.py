@@ -1,3 +1,4 @@
+from gs1.utils import parse_url
 from gs1.decompress.analyse_uri import extract_from_compressed_gs1_digital_link
 from gs1.decompress.build_gs1_digital_link import build_gs1_digital_link
 from gs1.decompress.build_structured_array import build_structured_array
@@ -5,7 +6,7 @@ from gs1.decompress.deal_with_duplicates import deal_with_duplicates
 
 
 def decompress_gs1_digital_link(
-        compressed_digital_link_uri: str, use_short_text: bool, uri_stem):
+        compressed_digital_link_uri: str, use_short_text: bool):
     """
     Decompress a compressed GS1 digital link URI.
 
@@ -15,9 +16,10 @@ def decompress_gs1_digital_link(
 
     :param compressed_digital_link_uri: Compressed digital link URI.
     :param use_short_text: Bool, indicating if a short text is preferred.
-    :param uri_stem: URI prefix. If not specified, a canonical one will be used.
     :return: uncompressed GS1 digital link.
     """
+    parsed_url = parse_url(url=compressed_digital_link_uri)
+    uri_stem = parsed_url[0]
     extracted = extract_from_compressed_gs1_digital_link(
         compressed_digital_link_uri)
     gs1_ai_array = extracted.get('GS1')

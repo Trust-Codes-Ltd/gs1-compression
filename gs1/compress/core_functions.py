@@ -7,20 +7,21 @@ from gs1.compress.build_compressed_gs1_digital_link import (
 from gs1.compress.utils import separate_id_non_id
 from gs1.compress.extract_from_element_strings import (
     extract_from_element_strings)
-from gs1.utils import binary_to_base64
+from gs1.utils import binary_to_base64, parse_url
 from constants.regular_expressions import REGEX_ALL_NUM
 from constants.ai_table import SHORT_CODE_TO_NUMERIC
 
 
 def compress_gs1_digital_link(
-        digital_link_uri,
-        uri_stem,
-        use_optimizations=None,
-        compress_other_key_value_pairs=False
-):
+        digital_link_uri: str,
+        use_optimizations: bool = False,
+        compress_other_key_value_pairs: bool = False
+) -> str:
     """Compress a full GS1 digital link."""
     query_string = ''
     non_gs1_key_value_pairs = {}
+    parse_result = parse_url(digital_link_uri)
+    uri_stem = parse_result[0]
     if "?" in digital_link_uri:
         first_question_mark = digital_link_uri.index("?")
         query_string = digital_link_uri[1 + first_question_mark:]

@@ -70,7 +70,7 @@ To compress a full-length GS1 digital link, import `compress_gs1_digital_link`:
 A code snippet of GS1 digital link compression:
 
     >>> full_uri = "https://id.gs1.org/gtin/9421902960055/lot/2010005828/ser/xyz1234"
-    >>> compressed_link = compress_gs1_digital_link(digital_link_uri=full_uri, use_optimization=False, compress_other_key_value_pairs=False)
+    >>> compressed_link = compress_gs1_digital_link(digital_link_uri=full_uri, use_optimizations=False, compress_other_key_value_pairs=False)
     >>> print("Compressed Link: " + compressed_link)
         Compressed Link: https://id.gs1.org/AREjalurbiAUO-cgohCz45Z67b8A
 
@@ -80,7 +80,7 @@ There are four parameters in the function:
 
 - Pass the URI prefix in the `uri_stem` parameter. Normally you might want to be the same as the full-length URI's prefix.
 
-- Set `use_optimization=True` if you would like to use optimized encoding of GS1 application identifiers and save more characters in the compressed string. By default, it's set to be `False`.
+- Set `use_optimizations=True` if you would like to use optimized encoding of GS1 application identifiers and save more characters in the compressed string. By default, it's set to be `False`.
 
 - Set `compress_other_key_value_pairs=True` if you would like to compress non-GS1 key-value pairs in the full URI. By default, it's set to be `False`.
 

@@ -10,9 +10,9 @@ def decompress_gs1_digital_link(
     """
     Decompress a compressed GS1 digital link URI.
 
-    For example, https://dlnkd.tn.gg/ARHKVAdpQg corresponds to
-    https://dlnkd.tn.gg/01/09780345418913. If a short text is preferred, the
-    result will be https://dlnkd.tn.gg/gtin/09780345418913 instead.
+    For example, https://id.gs1.org/ARHKVAdpQg corresponds to
+    https://id.gs1.org/01/09780345418913. If a short text is preferred, the
+    result will be https://id.gs1.org/gtin/09780345418913 instead.
 
     :param compressed_digital_link_uri: Compressed digital link URI.
     :param use_short_text: Bool, indicating if a short text is preferred.
@@ -35,7 +35,7 @@ def decompress_gs1_digital_link_to_structured_array(
     Analyze a compressed GS1 digital link URI and extract information about
     identifiers, qualifiers, data attributes and others.
 
-    For example, the structured array for https://dlnkd.tn.gg/ARHKVAdpQg is:
+    For example, the structured array for https://id.gs1.org/ARHKVAdpQg is:
     {
         "identifiers": [{"01": "09780345418913"}],
         "qualifiers": [],

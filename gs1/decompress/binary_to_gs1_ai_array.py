@@ -1,8 +1,14 @@
+import logging
+import traceback
+
 from gs1.utils import binary_to_hex
 from constants.table_p import TABLE_P
 from constants.table_opt import TABLE_OPT
 from constants.alphabet import SAFE_BASE64_ALPHABET
-from gs1.decompress.decode_binary_value import decode_binary_value, handle_decodings
+from gs1.decompress.decode_binary_value import (
+    decode_binary_value, handle_decodings)
+
+logger = logging.getLogger('__name__')
 
 
 def decompress_binary_to_gs1_array(binary_string):
@@ -31,7 +37,9 @@ def decompress_binary_to_gs1_array(binary_string):
                     cursor += 4
                     d3 = int(h3, 16)
                     if d3 > 9:
-                        raise Exception(
+                        logger.error(
+                            'Stack trace:\n{}'.format(traceback.format_exc()))
+                        raise ValueError(
                             "GS1 Application Identifier keys should be "
                             "all-numeric; " + h1_h2 + h3 + " is not all-numeric"
                         )
@@ -43,7 +51,8 @@ def decompress_binary_to_gs1_array(binary_string):
                     app_identifier = ''.join([h1_h2, h3, h4])
                     d4 = int(h4, 16)
                     if d4 > 9:
-                        raise Exception(
+                        logger.error('Stack trace:\n{}'.format(traceback.format_exc()))
+                        raise ValueError(
                             "GS1 Application Identifier keys should be "
                             "all-numeric; " + h1_h2 + h3 + h4 +
                             " is not all-numeric"
@@ -53,8 +62,9 @@ def decompress_binary_to_gs1_array(binary_string):
                 gs1_ai_array = decoded_dict.get('gs1AIarray')
                 cursor = decoded_dict.get('cursor')
             else:
-                raise Exception("Failure: Unsupported AI (reserved range) -"
-                                f" no entry in tableP; h1h2={h1_h2}")
+                logger.error('Stack trace:\n{}'.format(traceback.format_exc()))
+                raise ValueError("Failure: Unsupported AI (reserved range) -"
+                                 f" no entry in tableP; h1h2={h1_h2}")
         else:
             # This case h1_h2 is outside 00-99. Hex characters will be used.
             if h1_h2 in TABLE_OPT.keys():
@@ -87,6 +97,8 @@ def decompress_binary_to_gs1_array(binary_string):
                     gs1_ai_array = result.get('gs1AIarray')
                     cursor = result.get('cursor')
                 else:
-                    raise Exception(
+                    logger.error(
+                        'Stack trace:\n{}'.format(traceback.format_exc()))
+                    raise ValueError(
                         f"No optimisation defined for hex code hh={h1_h2}")
     return gs1_ai_array

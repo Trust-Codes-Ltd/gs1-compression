@@ -1,8 +1,11 @@
 import json
+import logging
+import traceback
 
 from constants.ai_table import AI_MAPS, AI_QUALIFIER
-
 from gs1.utils import verify_check_digit, verify_syntax, element_strings_push
+
+logger = logging.getLogger('__name__')
 
 
 def populate_list(gs1_ai_array, key_name):
@@ -29,11 +32,12 @@ def build_gs1_element_strings(gs1_ai_array, brackets: bool):
     variable_length_values = populate_list(gs1_ai_array, 'variableLength')
     if brackets:
         if len(identifiers) != 1:
-            raise Exception("The associative array should contain exactly one"
-                            " primary identification key - it contained " +
-                            str(len(identifiers)) + " " +
-                            json.dumps(identifiers) +
-                            "; please check for a syntax error")
+            logger.error('Stack trace:\n{}'.format(traceback.format_exc()))
+            raise ValueError("The associative array should contain exactly one"
+                             " primary identification key - it contained " +
+                             str(len(identifiers)) + " " +
+                             json.dumps(identifiers) +
+                             "; please check for a syntax error")
         else:
             verify_syntax(identifiers[0], gs1_ai_array[identifiers[0]])
             verify_check_digit(identifiers[0], gs1_ai_array[identifiers[0]])

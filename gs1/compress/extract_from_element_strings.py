@@ -1,9 +1,13 @@
 import re
+import logging
+import traceback
 
 from gs1.utils import AI_BY_LENGTH
 from constants.regular_expressions import REGEX_ROUND_BRACKETS, REGEX_BRACKETED
 from constants.ai_table import AI_REGEX
 from constants.fixed_length_table import FIXED_LENGTH_TABLE
+
+logger = logging.getLogger('__name__')
 
 
 def extract_from_element_strings(element_strings: str):
@@ -32,8 +36,11 @@ def extract_from_element_strings(element_strings: str):
                     if AI_REGEX[k].match(result[1]):
                         obj[k] = result[1]
                     else:
-                        raise("SYNTAX ERROR: invalid syntax for value of (" +
-                              k + ") : " + result[1])
+                        logger.error('Stack trace:\n{}'.format(
+                            traceback.format_exc()))
+                        raise ValueError(
+                            "SYNTAX ERROR: invalid syntax for value of (" +
+                            k + ") : " + result[1])
             return obj
     else:
         element_strings_length = len(element_strings)
@@ -77,5 +84,6 @@ def extract_from_element_strings(element_strings: str):
                     obj[ai_candidate] = buffer_item[k:]
                     matched = True
             if not matched:
-                raise("No matching GS1 AI found for " + buffer_item)
+                logger.error('Stack trace:\n{}'.format(traceback.format_exc()))
+                raise ValueError("No matching GS1 AI found for " + buffer_item)
         return obj

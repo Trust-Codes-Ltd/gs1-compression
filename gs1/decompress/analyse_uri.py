@@ -1,5 +1,6 @@
 import re
 import logging
+import traceback
 from urllib.parse import unquote
 
 from constants.regular_expressions import REGEX_ALL_NUM, REGEX_SAFE_64
@@ -63,9 +64,10 @@ def extract_from_gs1_digital_link(gs1_digital_link_uri):
                     PATH_SEQUENCE_CONSTRAINTS[ai_sequence[0]] or
                     PATH_SEQUENCE_CONSTRAINTS[ai_sequence[0]].index(ai_sequence[j]) <= last_index
             ):
-                raise Exception("Invalid GS1 Digital Link - invalid sequence"
-                                " of key qualifiers found in URI path"
-                                " information.")
+                logger.error('Stack trace:\n{}'.format(traceback.format_exc()))
+                raise ValueError("Invalid GS1 Digital Link - invalid sequence"
+                                 " of key qualifiers found in URI path"
+                                 " information.")
             last_index = PATH_SEQUENCE_CONSTRAINTS[
                 ai_sequence[0]].index(ai_sequence[j])
     # log the number keys

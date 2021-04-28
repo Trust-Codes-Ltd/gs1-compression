@@ -9,8 +9,8 @@ class TestDecompressGS1DigitalLink(TestCase):
         """Test decompress_gs1_digital_link."""
         self.assertEqual(
             decompress_gs1_digital_link(
-                "https://dlnkd.tn.gg/ARHKVAdpQg", False),
-            'https://dlnkd.tn.gg/01/09780345418913'
+                "https://id.gs1.org/ARHKVAdpQg", False),
+            'https://id.gs1.org/01/09780345418913'
         )
         self.assertEqual(
             decompress_gs1_digital_link(
@@ -26,11 +26,11 @@ class TestDecompressGS1DigitalLink(TestCase):
         """Test decompression of GS1 digital links without GTIN."""
         self.assertEqual(
             decompress_gs1_digital_link(
-                "https://dlnkd.tn.gg/ABeRcNWtKMPA", True),
-            'https://dlnkd.tn.gg/sscc/106141412345678908'
+                "https://id.gs1.org/ABeRcNWtKMPA", True),
+            'https://id.gs1.org/sscc/106141412345678908'
         )
         self.assertEqual(
             decompress_gs1_digital_link(
-                "https://dlnkd.tn.gg/QUCO_anbfA", False),
-            'https://dlnkd.tn.gg/414/0614141123452'
+                "https://id.gs1.org/QUCO_anbfA", False),
+            'https://id.gs1.org/414/0614141123452'
         )

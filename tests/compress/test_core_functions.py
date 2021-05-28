@@ -15,6 +15,8 @@ class TestCentralFunctions(TestCase):
             "https://id.gs1.org/01/05412345000013/10/"
             "ABC%26%2B123?7003=1903061658&k1=v1"
         )
+        self.link_8003 = ("https://example.com/8003/09421012301014f9804dbf"
+                          "?240=qwe390023")
         self.element_string = "(01)00614141123452(3103)000500"
         self.element_string_no_bracket = (
                 "3103000189010541234500001339232172" + '\x1d' + '10ABC123')
@@ -32,6 +34,9 @@ class TestCentralFunctions(TestCase):
         self.assertEqual(result_sscc.split('/')[-1], 'ABeRcNWtKMPA')
         result_gln = compress_gs1_digital_link(self.link_gln)
         self.assertEqual(result_gln.split('/')[-1], 'QUCO_anbfA')
+        result_8003 = compress_gs1_digital_link(self.link_8003)
+        self.assertEqual(result_8003.split('/')[-1],
+                         'JAaasHt_dNNt4ADESMALumsUfMAm34')
 
     def test_element_string_to_compressed_gs1_digital_link(self):
         """Test compressing a digital link element string."""

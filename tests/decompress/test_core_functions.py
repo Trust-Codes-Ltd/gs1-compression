@@ -14,8 +14,7 @@ class TestDecompressGS1DigitalLink(TestCase):
         )
         self.assertEqual(
             decompress_gs1_digital_link(
-                "http://example.org/AQnYUc1gmiER"
-                "BhQ0ytiyZuAGOLc1TXhXsaXbQKHFuaprwUmrBX6g",
+                "http://example.org/AQnYUc1gmiERBhQ0ytiyZuAGOLc1TXgpNWCv1",
                 False
             ),
             "http://example.org/01/05412345000013/10/ABC%26%2B123?7003="
@@ -33,4 +32,9 @@ class TestDecompressGS1DigitalLink(TestCase):
             decompress_gs1_digital_link(
                 "https://id.gs1.org/QUCO_anbfA", False),
             'https://id.gs1.org/414/0614141123452'
+        )
+        self.assertEqual(
+            decompress_gs1_digital_link(
+                "https://id.gs1.org/JAaasHt_dNNt4ADESMALumsUfMAm34", False),
+            "https://id.gs1.org/8003/09421012301014f9804dbf?240=qwe390023"
         )

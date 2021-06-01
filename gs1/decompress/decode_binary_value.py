@@ -29,35 +29,37 @@ def handle_decodings(enc, binary_string, cursor, gs1_ai_array, key, num_char):
 
     :param enc: a specified encoding enc (in range 0-4).
     :param binary_string: binary string.
-    :param cursor: bianry string cursor position.
+    :param cursor: binary string cursor position.
     :param gs1_ai_array: GS1 application identifier dict.
     :param key: Key.
     :param num_char: number of characters to extract.
     :return:
     """
     result = {}
+    if key not in gs1_ai_array:
+        gs1_ai_array[key] = ''
     if enc == 0:
         num_bits_for_value = number_of_value_bits(num_char)
         sub_str = binary_string[cursor:cursor + num_bits_for_value]
         cursor += num_bits_for_value
-        gs1_ai_array[key] = str(int(sub_str, 2))
+        gs1_ai_array[key] += str(int(sub_str, 2))
     elif enc == 1:
         result = build_string(num_char, HEX_ALPHABET, cursor, 4, binary_string)
         cursor = result.get('cursor')
-        gs1_ai_array[key] = result.get('s').lower()
+        gs1_ai_array[key] += result.get('s').lower()
     elif enc == 2:
         result = build_string(num_char, HEX_ALPHABET, cursor, 4, binary_string)
         cursor = result.get('cursor')
-        gs1_ai_array[key] = result.get('s').upper()
+        gs1_ai_array[key] += result.get('s').upper()
     elif enc == 3:
         result = build_string(
             num_char, SAFE_BASE64_ALPHABET, cursor, 6, binary_string)
         cursor = result.get('cursor')
-        gs1_ai_array[key] = result.get('s')
+        gs1_ai_array[key] += result.get('s')
     elif enc == 4:
         result = build_string(num_char, '', cursor, 7, binary_string)
         cursor = result.get('cursor')
-        gs1_ai_array[key] = result.get('s')
+        gs1_ai_array[key] += result.get('s')
     result['gs1AIarray'] = gs1_ai_array
     result['cursor'] = cursor
     return result

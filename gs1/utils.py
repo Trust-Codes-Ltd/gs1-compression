@@ -71,6 +71,28 @@ def verify_syntax(app_identifier, value):
         return True
 
 
+def real_calculate_check_digit(gs1_value):
+    """
+    Calculate the check digit without specifying the identifier key.
+
+    :param gs1_value: GS1 identifier.
+    :return: Check digit.
+    """
+    multipliers = []
+    counter = 0
+    total = 0
+    for i in reversed(range(len(gs1_value))):
+        d = gs1_value[i]
+        if counter % 2 == 0:
+            multiplier = 3
+        else:
+            multiplier = 1
+        multipliers.append(multiplier)
+        total += int(d) * multiplier
+        counter += 1
+    return (10 - total % 10) % 10
+
+
 def calculate_check_digit(app_identifier, gs1_id_value):
     """
     Calculate the expected GS1 Check Digit for a given AI

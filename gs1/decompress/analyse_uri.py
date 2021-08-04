@@ -3,9 +3,9 @@ import logging
 import traceback
 from urllib.parse import unquote
 
-from constants.regular_expressions import REGEX_ALL_NUM, REGEX_SAFE_64
-from constants.ai_table import SHORT_CODE_TO_NUMERIC, AI_MAPS, AI_REGEX
-from constants.path_sequence_constraints import PATH_SEQUENCE_CONSTRAINTS
+from gs1.constants import REGEX_ALL_NUM, REGEX_SAFE_64
+from gs1.constants import SHORT_CODE_TO_NUMERIC, AI_MAPS, AI_REGEX
+from gs1.constants import PATH_SEQUENCE_CONSTRAINTS
 
 from gs1.decompress.build_structured_array import build_structured_array
 from gs1.decompress.build_gs1_element_strings import build_gs1_element_strings

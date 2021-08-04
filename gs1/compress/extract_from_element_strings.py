@@ -3,9 +3,9 @@ import logging
 import traceback
 
 from gs1.utils import AI_BY_LENGTH
-from constants.regular_expressions import REGEX_ROUND_BRACKETS, REGEX_BRACKETED
-from constants.ai_table import AI_REGEX
-from constants.fixed_length_table import FIXED_LENGTH_TABLE
+from gs1.constants import REGEX_ROUND_BRACKETS, REGEX_BRACKETED
+from gs1.constants import AI_REGEX
+from gs1.constants import FIXED_LENGTH_TABLE
 
 logger = logging.getLogger('__name__')
 

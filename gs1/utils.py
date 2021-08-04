@@ -3,9 +3,9 @@ import traceback
 from math import ceil, log
 from urllib.parse import urlparse
 
-from constants.alphabet import SAFE_BASE64_ALPHABET
-from constants.regular_expressions import REGEX_ALL_NUM, CHAR_TO_ESCAPE
-from constants.ai_table import AI_REGEX, AI_CHECK_DIGIT_POSITION, AI_TABLE
+from gs1.constants import SAFE_BASE64_ALPHABET
+from gs1.constants import REGEX_ALL_NUM, CHAR_TO_ESCAPE
+from gs1.constants import AI_REGEX, AI_CHECK_DIGIT_POSITION, AI_TABLE
 
 
 logger = logging.getLogger('__name__')

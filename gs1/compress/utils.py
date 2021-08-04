@@ -1,5 +1,5 @@
-from constants.table_opt import TABLE_OPT
-from constants.ai_table import AI_MAPS
+from gs1.constants import TABLE_OPT
+from gs1.constants import AI_MAPS
 
 
 def find_candidates_from_table_opt(key_list, table_opt=TABLE_OPT):

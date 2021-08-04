@@ -1,4 +1,4 @@
-from constants.ai_table import SHORT_CODE_TO_NUMERIC
+from gs1.constants import SHORT_CODE_TO_NUMERIC
 
 
 def deal_with_duplicates(gs1_array: dict):

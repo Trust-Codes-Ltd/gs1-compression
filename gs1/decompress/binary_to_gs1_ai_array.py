@@ -2,9 +2,9 @@ import logging
 import traceback
 
 from gs1.utils import binary_to_hex
-from constants.table_p import TABLE_P
-from constants.table_opt import TABLE_OPT
-from constants.alphabet import SAFE_BASE64_ALPHABET
+from gs1.constants import TABLE_P
+from gs1.constants import TABLE_OPT
+from gs1.constants import SAFE_BASE64_ALPHABET
 from gs1.decompress.decode_binary_value import (
     decode_binary_value, handle_decodings)
 

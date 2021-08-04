@@ -8,8 +8,8 @@ from gs1.compress.utils import separate_id_non_id
 from gs1.compress.extract_from_element_strings import (
     extract_from_element_strings)
 from gs1.utils import binary_to_base64, parse_url
-from constants.regular_expressions import REGEX_ALL_NUM
-from constants.ai_table import SHORT_CODE_TO_NUMERIC
+from gs1.constants import REGEX_ALL_NUM
+from gs1.constants import SHORT_CODE_TO_NUMERIC
 
 
 def compress_gs1_digital_link(

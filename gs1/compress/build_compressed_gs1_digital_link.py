@@ -10,8 +10,8 @@ from gs1.compress.encode_binary_value import (
 )
 from gs1.utils import binary_to_base64
 
-from constants.table_opt import TABLE_OPT
-from constants.alphabet import SAFE_BASE64_ALPHABET
+from gs1.constants import TABLE_OPT
+from gs1.constants import SAFE_BASE64_ALPHABET
 
 
 def compress_gs1_ai_array_to_binary(

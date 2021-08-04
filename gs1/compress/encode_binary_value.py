@@ -1,9 +1,9 @@
 from gs1.utils import number_of_value_bits, number_of_length_bits
 
-from constants.table_f import TABLE_F
-from constants.regular_expressions import (
+from gs1.constants import TABLE_F
+from gs1.constants import (
     REGEX_ALL_NUM, REGEX_SAFE_64, REGEX_HEX_LOWER, REGEX_HEX_UPPER)
-from constants.alphabet import HEX_ALPHABET, SAFE_BASE64_ALPHABET
+from gs1.constants import HEX_ALPHABET, SAFE_BASE64_ALPHABET
 
 
 def determine_encoding(char_string) -> int:

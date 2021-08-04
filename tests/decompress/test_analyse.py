@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from constants.alphabet import SAFE_BASE64_ALPHABET
+from gs1.constants import SAFE_BASE64_ALPHABET
 from gs1.decompress.decode_binary_value import build_string, handle_decodings
 from gs1.decompress.analyse_uri import analyse_uri, extract_from_compressed_gs1_digital_link
 

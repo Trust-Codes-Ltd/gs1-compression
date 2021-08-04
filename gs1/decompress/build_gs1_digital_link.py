@@ -3,7 +3,7 @@ import logging
 import traceback
 
 from gs1.decompress.build_gs1_element_strings import populate_list
-from constants.ai_table import AI_UNION_KEYS, AI_SHORT_CODE, AI_QUALIFIER
+from gs1.constants import AI_UNION_KEYS, AI_SHORT_CODE, AI_QUALIFIER
 from gs1.utils import verify_syntax, verify_check_digit, percent_encode
 
 logger = logging.getLogger('__name__')

@@ -2,7 +2,7 @@ import json
 import logging
 import traceback
 
-from constants.ai_table import AI_MAPS, AI_QUALIFIER
+from gs1.constants import AI_MAPS, AI_QUALIFIER
 from gs1.utils import verify_check_digit, verify_syntax, element_strings_push
 
 logger = logging.getLogger('__name__')

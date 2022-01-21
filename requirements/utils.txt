@@ -1,2 +1,2 @@
 flake8==3.8.0
-ipython==7.10.0
+ipython==7.16.3

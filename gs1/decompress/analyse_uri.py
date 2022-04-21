@@ -52,7 +52,7 @@ def extract_from_gs1_digital_link(gs1_digital_link_uri):
         if i % 2 == 0:
             k = split_path[i]
             if not REGEX_ALL_NUM.match(split_path[i]):
-                k = SHORT_CODE_TO_NUMERIC[k]
+                k = SHORT_CODE_TO_NUMERIC.get(k, None)
             ai_sequence.append(k)
     ai_sequence = ai_sequence[::-1]
 

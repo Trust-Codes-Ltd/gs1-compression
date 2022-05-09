@@ -167,7 +167,8 @@ def extract_from_compressed_gs1_digital_link(gs1_digital_link_uri):
                 key not in SHORT_CODE_TO_NUMERIC.keys()):
             non_gs1_query_string_candidates[key] = obj_gs1[key]
     for key in non_gs1_query_string_candidates.keys():
-        obj_gs1.pop(key)
+        if key in obj_gs1:
+            obj_gs1.pop(key)
     result['GS1'] = obj_gs1
     result['other'] = non_gs1_query_string_candidates
     return result

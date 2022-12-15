@@ -20,6 +20,8 @@ class TestCentralFunctions(TestCase):
         self.element_string = "(01)00614141123452(3103)000500"
         self.element_string_no_bracket = (
                 "3103000189010541234500001339232172" + '\x1d' + '10ABC123')
+        self.element_string_fixed_length = (
+            "0100614141123452")
 
     def test_compress_gs1_digital_link(self):
         """Test compressing a digital link."""
@@ -50,3 +52,9 @@ class TestCentralFunctions(TestCase):
             False, False)
         self.assertEqual(result_no_bracket,
                          'https://id.gs1.org/AQnYUc1gmiCNV4JGYgYAF6ckaEPg')
+
+        result_element_string_fixed_length = element_string_to_compressed_gs1_digital_link(
+            self.element_string_fixed_length, False, 'https://id.gs1.org',
+            False, False)
+        self.assertEqual(result_element_string_fixed_length,
+                         'https://id.gs1.org/AQEd-1O2-A')

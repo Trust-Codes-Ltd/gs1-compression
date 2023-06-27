@@ -57,8 +57,11 @@ def extract_from_element_strings(element_strings: str):
                 length = FIXED_LENGTH_TABLE.get(first_two_digits)
                 buffer.append(element_strings[cursor:cursor + length])
                 cursor += length
+                # If there are no more characters, continue
+                if cursor >= element_strings_length:
+                    continue
                 # If the next character is the group separator, move past
-                if element_strings[cursor] == group_separator:
+                elif element_strings[cursor] == group_separator:
                     cursor += 1
             else:
                 # The first two digits are not within the array of GS1

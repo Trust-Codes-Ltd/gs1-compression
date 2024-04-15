@@ -99,7 +99,7 @@ In addition to the terms of the licence, this source code is provided by Trust C
  
  All Rights Reserved.
   
-  © Trust Codes Limited 2021.
+  © Trust Codes Global Limited 2024.
 
 ## License
 
